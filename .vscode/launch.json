@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "main cppvsdbg",
+    "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/qt-main.exe",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": []
+    },
+    {
+      "name": "qt-main cppdbg",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/qt-main.exe",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": []
+    },
+    {
+      "name": "main codelldb",
+      "type": "codelldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/qt-main.exe",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
+

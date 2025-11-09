@@ -1,0 +1,4418 @@
+{
+  "Registers": {
+    "Age": {
+      "addr": 7,
+      "description": "The Age register contains a calculated percentage value of the application’s present cell capacity compared to its expected capacity. The result can be used by the host to gauge the battery pack health as compared to a new pack of the same type. The equation for the register output is: Age Register = 100% x (FullCapNom Register/DesignCap Register)",
+      "initial": 0,
+      "name": "Age",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AgeForecast": {
+      "addr": 185,
+      "description": "The AgeForecast register displays the estimated cycle life of the application cell. The AgeForecast value should be compared against the Cycles (017h) register to determine the estimated number of remaining cell cycles. This is accomplished by accumulating the capacity loss per cycle as the cell ages. The result becomes more accurate with each cycle measured. The AgeForecast register has a full range of 0 cycles to 16383 cycles with a 25% LSb. This register is recalculated from learned information at power-up.",
+      "initial": 0,
+      "name": "AgeForecast",
+      "size": 1,
+      "step": 25.0,
+      "unit": "",
+      "value": 0
+    },
+    "AtAvCap": {
+      "addr": 223,
+      "description": "The AtAvCap register holds the estimated remaining capacity of the cell based on the theoretical load current value of the AtRate register. The value is stored in terms of µVh and must be divided by the application sense-resistor value to determine the remaining capacity in mAh.",
+      "initial": 0,
+      "name": "AtAvCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AtAvSOC": {
+      "addr": 206,
+      "description": "The AtAvSOC register holds the theoretical state of charge of the cell based on the theoretical current load of the AtRate register. The register value is stored as a percentage with a resolution of 0.0039% per LSB. If a 1% resolution state-ofcharge value is desired, the host can read only the upper byte of the register instead.",
+      "initial": 0,
+      "name": "AtAvSOC",
+      "size": 1,
+      "step": 0.0039,
+      "unit": "",
+      "value": 0
+    },
+    "AtQResidual": {
+      "addr": 220,
+      "description": "The AtQResidual register displays the residual charge held by the cell at the theoretical load-current level entered into the AtRate register.",
+      "initial": 0,
+      "name": "AtQResidual",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AtRate": {
+      "addr": 4,
+      "description": "Host software should write the AtRate register with a negative two’s-complement 16-bit value of a theoretical load current prior to reading any of the at-rate output registers.",
+      "initial": 0,
+      "name": "AtRate",
+      "signed": true,
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "AtTTe": {
+      "addr": 221,
+      "description": "The AtTTE register can be used to estimate time-to-empty for any theoretical current load entered into the AtRate register. The AtTTE register displays the estimated time-to-empty for the application by dividing AtAvCap by the AtRate register value. The AtTTE register has a maximum value of 102.3 hours. When AtTTE is larger than the maximum value, the AtTTE register saturates and contains the maximum value (FFFFh). The host can calculate time values longer that the maximum register value with the following equation: AtTTECALCULATED (hours) = AtAvCap(mAh)/AtRate(mA)",
+      "initial": 0,
+      "name": "AtTTe",
+      "size": 1,
+      "step": 5.6195068359375,
+      "unit": "",
+      "value": 0
+    },
+    "AvCap": {
+      "addr": 31,
+      "description": "The AvCap register holds the calculated available capacity of the cell pack based on all inputs from the ModelGauge m5 algorithm including empty compensation. The register value is an unfiltered calculation. Jumps in the reported value can be caused by changes in the application such as abrupt changes in load current or temperature. See the Fuel-Gauge Empty Compensation.",
+      "initial": 0,
+      "name": "AvCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvGCell4": {
+      "addr": 209,
+      "description": "An 8-sample filtered average of the Cell4 register readings.",
+      "initial": 0,
+      "name": "AvGCell4",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvSOC": {
+      "addr": 14,
+      "description": "The AvSOC register holds the calculated available state of charge of the cell based on all inputs from the ModelGauge m5 algorithm including empty compensation. The AvSOC percentage corresponds with AvCap and FullCapNom. The AvSOC register value is an unfiltered calculation. Jumps in the reported value can be caused by changes in the application such as abrupt changes in load current or temperature. See the Fuel-Gauge Empty Compensation section for details.",
+      "initial": 0,
+      "name": "AvSOC",
+      "size": 1,
+      "unit": "",
+      "value": 0,
+      "zero_code_value": 2.0
+    },
+    "AvgCell1": {
+      "addr": 212,
+      "description": "An 8-sample filtered average of the Cell1 register readings.",
+      "initial": 0,
+      "name": "AvgCell1",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvgCell2": {
+      "addr": 211,
+      "description": "An 8-sample filtered average of the Cell2 register readings.",
+      "initial": 0,
+      "name": "AvgCell2",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvgCell3": {
+      "addr": 210,
+      "description": "An 8-sample filtered average of the Cell3 register readings.",
+      "initial": 0,
+      "name": "AvgCell3",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvgCurrent": {
+      "addr": 29,
+      "description": " The AvgCurrent register reports an average of Current register readings over a configurable 0.7 second to 6.4 hour time period. See the nFilterCfg register description for details on setting the time filter. The first Current register reading after returning to active mode sets the starting point of the AvgCurrent filter.",
+      "initial": 0,
+      "name": "AvgCurrent",
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "AvgDieTemp": {
+      "addr": 64,
+      "description": "The AvgDieTemp register reports a 4-sample filtered average of the DieTemp register.",
+      "initial": 0,
+      "name": "AvgDieTemp",
+      "signed": true,
+      "size": 1,
+      "step": 0.00390625,
+      "unit": "",
+      "value": 0
+    },
+    "AvgPower": {
+      "addr": 179,
+      "description": "Filtered Average Power from the power register. LSB is 1.6mW with a 5mΩ sense resistor. Filter bits located in Config2.POWR.",
+      "initial": 0,
+      "name": "AvgPower",
+      "size": 1,
+      "value": 0
+    },
+    "AvgTA": {
+      "addr": 22,
+      "description": "The AvgTA register reports an average of the readings from the Temp register. The averaging period is configurable from 6 minutes up to 12 hours as set by the FilterCfg register. The first Temp register reading after returning to active mode sets the starting point of the averaging filters.",
+      "initial": 0,
+      "name": "AvgTA",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "AvgVCell": {
+      "addr": 25,
+      "description": "The AvgVCell register reports an average of the VCell register readings. The time period for averaging is configurable from a 12 second to 24 minute time period. See the nFilterCfg register description for details on setting the time filter. The first VCell register reading after power-up or exiting shutdown mode sets the starting point of the AvgVCell register. Note that when a cell relaxation event is detected the averaging period changes to the period defined by the RelaxCfg.dt setting. The register reverts back to its normal averaging period when a charge or discharge current is detected.",
+      "initial": 0,
+      "name": "AvgVCell",
+      "size": 1,
+      "step": 0.078125,
+      "unit": "",
+      "value": 0
+    },
+    "Batt": {
+      "addr": 218,
+      "description": "The Batt registers contains the total pack voltage measured inside the protector on a 20.48V scale with an LSB of 0.3125mV.",
+      "initial": 0,
+      "name": "Batt",
+      "size": 1,
+      "step": 0.0003125,
+      "unit": "",
+      "value": 0
+    },
+    "CELL1": {
+      "addr": 216,
+      "description": "Contains the latest voltage measurement of cell 1.",
+      "initial": 0,
+      "name": "CELL1",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "CELL2": {
+      "addr": 215,
+      "description": "Contains the latest voltage measurement of cell 2.",
+      "initial": 0,
+      "name": "CELL2",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "CELL3": {
+      "addr": 214,
+      "description": "Contains the latest voltage measurement of cell 2.",
+      "initial": 0,
+      "name": "CELL3",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "CELL4": {
+      "addr": 213,
+      "description": "Contains the latest voltage measurement of cell 4.",
+      "initial": 0,
+      "name": "CELL4",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "CGTempCo": {
+      "addr": 184,
+      "description": "Set nNVCfg2.enMet = 1 to use CGTempCo to adjust current measurements for temperature. CGTempCo has a range of 0% to 3.1224% per degrees Celsius with a step size of 3.1224/65536 percent per degrees Celsius. If the nNVCfg1.enMtl bit is clear CGTempCo defaults to a value of 20C8h (compensation for copper) or 0.4% per degrees Celsius which is the approximate temperature coefficient of a copper trace. If the nNVCfg1.enMtl bit is set CGTempCo restores from nCGTempCo (1C9h) after IC reset allowing a custom sense resistor temperature coefficient to be used. Factory Default Value: 0000h. Alternate Initial Value: 20C8h.",
+      "initial": 8392,
+      "name": "CGTempCo",
+      "size": 1,
+      "step": 4.764404296875e-05,
+      "unit": "",
+      "value": 0
+    },
+    "CVHalfTime": {
+      "addr": 183,
+      "description": "The amount of time in the constant voltage portion of the charge cycle for the current to taper to half of the charging current in the constant current portion of the charge cycle. See Figure 29. CVHalfTime has an LSB of 0.0001953125 hours (~0.7 seconds).",
+      "initial": 0,
+      "name": "CVHalfTime",
+      "size": 1,
+      "step": 0.0001953125,
+      "unit": "",
+      "value": 0
+    },
+    "CVMixCap": {
+      "addr": 182,
+      "description": "defined as the approximate state of charge where the charge transitions from the constant current portion of the charge cycle to the constant voltage portion of the charge current. See Figure 29. CVMixCapRatio has an LSB of 0.5mAh.",
+      "initial": 0,
+      "name": "CVMixCap",
+      "size": 1,
+      "step": 0.5,
+      "unit": "",
+      "value": 0
+    },
+    "ChargingCurrent": {
+      "addr": 40,
+      "description": "The ChargingCurrent register reports the prescribed charging current. See the Charging Prescription section for more details.",
+      "initial": 0,
+      "name": "ChargingCurrent",
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "ChargingVoltage": {
+      "addr": 42,
+      "description": "The ChargingVoltage register reports the prescribed charging voltage.",
+      "initial": 0,
+      "name": "ChargingVoltage",
+      "size": 1,
+      "step": 0.078125,
+      "unit": "",
+      "value": 0
+    },
+    "CommStat": {
+      "addr": 97,
+      "description": "CommStat Register",
+      "initial": 0,
+      "name": "CommStat",
+      "size": 1,
+      "value": 0
+    },
+    "Command": {
+      "addr": 96,
+      "description": "Command Register",
+      "initial": 0,
+      "name": "Command",
+      "size": 1,
+      "value": 0
+    },
+    "Config": {
+      "Aen": {
+        "description": "When Aen = 1, violation of any of the alert threshold register values by temperature, voltage, or SOC triggers an alert. This bit affects the ALRT pin operation only. The Smx, Smn, Tmx, Tmn, Vmx, Vmn, Imx, and Imn bits of the Status register (000h) are not disabled. Note that if this bit is set to 1, the ALSH bit should be set to 0 to prevent an alert condition from causing the device to enter shutdown mode.",
+        "initial": 0,
+        "name": "Enable Alert on Fuel-Gauge Outputs",
+        "position": 2,
+        "value": 0
+      },
+      "COMMSH": {
+        "description": "Set to logic 1 to force the device to enter shutdown mode if both SDA and SCL are held low (I2C version) or DQ is held low (1-Wire version) for more than the timeout of the ShdnTimer register. This also configures the device to wake up on a rising edge of any communication. Note that if COMMSH is set to 0, the device wakes up an edge of any of the SDA/DQ or SCL/OD pins. See the Modes of Operation section.",
+        "initial": 0,
+        "name": "Communication Shutdown",
+        "position": 6,
+        "value": 0
+      },
+      "DisBlockRead": {
+        "description": "Set DisBlockRead to 1 for normal read access in the 16h memory space. Clear DisBlockRead to 0 to enable SBS block reads when SBS Mode is enabled with nNVCfg0.SBSen. The default setting for DisBlockRead is 1.",
+        "initial": 1,
+        "name": "Disable SBS Block Read",
+        "position": 9,
+        "value": 1
+      },
+      "DisLDO": {
+        "description": "Set DisLDO to 1 to disable the Always-On LDO if it is enabled in nPackCfg.AOCfg.",
+        "initial": 0,
+        "name": "Disable AOLDO",
+        "position": 11,
+        "value": 0
+      },
+      "ETHRM": {
+        "description": "Set to logic 1 to enable the automatic TH output bias and TH measurement.",
+        "initial": 1,
+        "name": "Enable Thermistor",
+        "position": 4,
+        "value": 1
+      },
+      "FTHRM": {
+        "description": "This allows the host to control the bias of the thermistor switch or enable fast detection of battery removal. Set FTHRM = 1 to always enable the thermistor bias switch. With a standard 10kΩ thermistor, this adds an additional 200μA, approximately, to the current drain of the circuit.",
+        "initial": 0,
+        "name": "Force Thermistor Bias Switch",
+        "position": 3,
+        "value": 0
+      },
+      "PAen": {
+        "description": "Set PAen = 1 to enable this feature that saves the protector faults (TooHotC, TooColdC, OVP, OCCP, DieHot, TooHotD, UVP, ODCP, LDet) into the low byte of the nBattStatus register. After each life logging write to NVM, the low byte of nBattStatus is cleared.",
+        "initial": 0,
+        "name": "Protection Alert Enable",
+        "position": 0,
+        "value": 0
+      },
+      "PBEn": {
+        "description": "Set PBEn = 1 to enable wakeup by pushbutton. This application allows a product to be completely sealed with battery disconnected until a shared system button is pressed.",
+        "initial": 0,
+        "name": "Pushbutton Enable",
+        "position": 10,
+        "value": 0
+      },
+      "SHIP": {
+        "description": "Write this bit to logic 1 to force into ship or deepship mode based on nProtCfg.DeepShpEn. Both FETs open within 1.4s and the IC will fully enter ship or deepship after timeout of the Shutdown Timer register which is configured in nDelayCfg.UVPTimer. SHIP is reset to 0 at power-up and upon exiting ship or deepship mode.",
+        "initial": 1,
+        "name": "Ship or Deepship Command",
+        "position": 7,
+        "value": 1
+      },
+      "SS": {
+        "description": "When SS = 1, SOC alerts can only be cleared through software. When SS = 0, SOC alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 0,
+        "name": "SOC ALRT Sticky",
+        "position": 14,
+        "value": 0
+      },
+      "TS": {
+        "description": "When TS = 1, temperature alerts can only be cleared through software. When TS = 0, temperature alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 1,
+        "name": "Temperature ALRT Sticky",
+        "position": 13,
+        "value": 1
+      },
+      "VS": {
+        "description": "When VS = 1, voltage alerts can only be cleared through software. When VS = 0, voltage alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 0,
+        "name": "Voltage ALRT Sticky",
+        "position": 12,
+        "value": 0
+      },
+      "addr": 11,
+      "initial": 8848,
+      "name": "Config",
+      "size": 1,
+      "value": 8848,
+      "zeros_mask": 33026
+    },
+    "Config2": {
+      "ADCFIFOen": {
+        "description": "If continuous mode is disabled, a single-cycle acquisition mode for ADC FIFO is enabled by setting Config2.ADCFIFOen = 1.",
+        "initial": 0,
+        "name": "ADC FIFO Enable",
+        "position": 12,
+        "value": 0
+      },
+      "AtRtEn": {
+        "initial": 0,
+        "name": "AtRtEn",
+        "position": 13,
+        "value": 0
+      },
+      "DRCfg": {
+        "initial": 0,
+        "lsb": 2,
+        "msb": 3,
+        "name": "Deep Relax Time Configuration",
+        "value": 0,
+        "values": {
+          "DRCfg_0": {
+            "description": "0.8h-1.6h",
+            "value": 0
+          },
+          "DRCfg_1": {
+            "description": "1.6h-3.2h",
+            "value": 1
+          },
+          "DRCfg_2": {
+            "description": "3.2h-6.4h",
+            "value": 2
+          },
+          "DRCfg_3": {
+            "description": "6.4h-12.8h",
+            "value": 3
+          }
+        }
+      },
+      "POR_CMD": {
+        "description": "Set this bit to 1 to restart IC firmware operation without performing a recall of nonvolatile memory into RAM. This allows different IC configurations to be tested without changing nonvolatile memory settings. This bit is set to 0 at power-up and automatically clears itself after firmware restart.",
+        "initial": 0,
+        "name": "Firmware Restart",
+        "position": 15,
+        "value": 0
+      },
+      "POWR": {
+        "description": "Sets the time constant for the AvgPower register. The default POR value of 0000b gives a time constant of 0.7s. The equation setting the period is: AvgPower time constant = 45s x 2(POWR-6)",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 11,
+        "name": "POWR",
+        "value": 0
+      },
+      "TAlrtEn": {
+        "description": "Set this bit to 1 to enable temperature based alerts. Write this bit to 0 to disable temperature alerts. This bit is set to 1 at power-up.",
+        "initial": 0,
+        "name": "Temperature Alert Enable",
+        "position": 6,
+        "value": 0
+      },
+      "addr": 171,
+      "dSOCen": {
+        "initial": 0,
+        "name": "dSOCen",
+        "position": 7,
+        "value": 0
+      },
+      "initial": 0,
+      "name": "Config2",
+      "ones_mask": 16,
+      "size": 1,
+      "value": 0,
+      "zeros_mask": 16419
+    },
+    "Current": {
+      "addr": 28,
+      "description": " The IC measures the voltage between the CSP and CSN pins and the result is stored as a two’s complement value in the Current register. Voltages outside the minimum and maximum register values are reported as the minimum or maximum value. The register value should be divided by the sense resistance to convert to amps. The value of the sense resistor determines the resolution and the full-scale range of the current readings. Table 53 shows range and resolution values for typical sense resistances.",
+      "initial": 0,
+      "name": "Current",
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "Cycles": {
+      "addr": 23,
+      "backup": "nCycles",
+      "description": "The Cycles register maintains a total count of the number of charge/discharge cycles of the cell that have occurred. The result is stored as a percentage of a full cycle. For example, a full charge/discharge cycle results in the Cycles register incrementing by 100%. The Cycles register has a full range of 0 to 16383 cycles with a 25.0% LSb. Cycles is periodically saved to nCycles to provide a long term nonvolatile cycle count.",
+      "initial": 0,
+      "name": "Cycles",
+      "size": 1,
+      "step": 25.0,
+      "unit": "nCycles",
+      "value": 0
+    },
+    "DesignCap": {
+      "addr": 24,
+      "description": "The nDesignCap register holds the expected capacity of the cell. This value is used to determine age and health of the cell by comparing against the measured present cell capacity.",
+      "initial": 0,
+      "name": "DesignCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "DevName": {
+      "Device": {
+        "initial": 0,
+        "lsb": 0,
+        "msb": 3,
+        "name": "Device",
+        "value": 0
+      },
+      "Revision": {
+        "initial": 0,
+        "lsb": 4,
+        "msb": 15,
+        "name": "Revision",
+        "value": 0
+      },
+      "addr": 33,
+      "description": "The DevName register holds device type and firmware revision information. This allows the host software to easily identify the type of IC being communicated to. The DevName for the IC is 4209h, 420Ah, or 420Bh.",
+      "initial": 0,
+      "name": "DevName",
+      "size": 1,
+      "value": 0
+    },
+    "DieTemp": {
+      "addr": 52,
+      "description": "This register displays temperature in degrees Celsius, ±128°C or 1°C in the high-byte or 1/256°C LSB.",
+      "initial": 0,
+      "name": "DieTemp",
+      "signed": true,
+      "size": 1,
+      "step": 0.00390625,
+      "unit": "",
+      "value": 0
+    },
+    "FStat": {
+      "DNR": {
+        "description": "This bit is set to 1 at cell insertion and remains set until the output registers have been updated. Afterwards, the IC clears this bit indicating the fuel gauge calculations are now up to date. This takes between 445ms and 1.845s depending on whether the IC was in a powered state prior to the cell-insertion event. ",
+        "initial": 0,
+        "name": "Data Not Ready",
+        "position": 0,
+        "value": 0
+      },
+      "EDet": {
+        "description": "This bit is set to 1 when the IC detects that the cell empty point has been reached. This bit is reset to 0 when the cell voltage rises above the recovery threshold. See the VEmpty register for details.",
+        "initial": 0,
+        "name": "Empty Detection",
+        "position": 8,
+        "value": 0
+      },
+      "RelDt": {
+        "description": "This bit is set to 1 whenever the ModelGauge m5 algorithm detects that the cell is in a fully relaxed state. This bit is cleared to 0 whenever a current greater than the load threshold is detected.",
+        "initial": 0,
+        "name": "Relaxed cell detection",
+        "position": 9,
+        "value": 0
+      },
+      "RelDt2": {
+        "description": "This bit is set to 1 whenever the ModelGauge m5 algorithm detects that the cell has been relaxed for a period of 48 to 96 minutes or longer. This bit is cleared to 0 whenever the cell is no longer in a relaxed state.",
+        "initial": 0,
+        "name": "Long Relaxation",
+        "position": 6,
+        "value": 0
+      },
+      "addr": 61,
+      "description": "The FStat register is a read-only register that monitors the status of the ModelGauge algorithm. Do not write to this register location.",
+      "initial": 0,
+      "name": "FStat",
+      "size": 1,
+      "value": 0,
+      "x_mask": 64702
+    },
+    "FilterCfg": {
+      "CURR": {
+        "description": "Sets the time constant for the AvgCurrent register. The default POR value of 0100b gives a time constant of 5.625s. The equation setting the period is: AvgCurrent time constant = 45s x 2(CURR-7)",
+        "initial": 4,
+        "lsb": 0,
+        "msb": 3,
+        "name": "CURR",
+        "value": 4
+      },
+      "MIX": {
+        "description": "Sets the time constant for the mixing algorithm. The default POR value of 1101b gives a time constant of 12.8 hours. The equation setting the period is: Mixing Period = 45s x 2^(MIX-3)",
+        "initial": 13,
+        "lsb": 7,
+        "msb": 10,
+        "name": "MIX",
+        "value": 13
+      },
+      "TEMP": {
+        "description": "Sets the time constant for the AvgTA register. The default POR value of 0001b gives a time constant of 1.5 minutes. The equation setting the period is: AvgTA time constant = 45s x 2^TEMP",
+        "initial": 1,
+        "lsb": 11,
+        "msb": 13,
+        "name": "TEMP",
+        "value": 1
+      },
+      "VOLT": {
+        "description": "Sets the time constant for the AvgVCell register. The default POR value of 010b gives a time constant of 45.0s. The equation setting the period is: AvgVCell time constant = 45s x 2^(VOLT-2)",
+        "initial": 2,
+        "lsb": 4,
+        "msb": 6,
+        "name": "VOLT",
+        "value": 2
+      },
+      "addr": 41,
+      "description": "The nFilterCfg register sets the averaging time period for all ADC readings, for mixing OCV results, and coulomb count results. It is recommended that these values are not changed unless absolutely required by the application.",
+      "initial": 3748,
+      "name": "FilterCfg",
+      "size": 1,
+      "value": 3748,
+      "zeros_mask": 49152
+    },
+    "FullCap": {
+      "addr": 53,
+      "backup": "nFullCapNom",
+      "description": "This register holds the calculated full capacity of the cell based on all inputs from the ModelGauge m5 algorithm including empty compensation. A new full-capacity value is calculated continuously as application conditions change.",
+      "initial": 0,
+      "name": "FullCap",
+      "size": 1,
+      "value": 0
+    },
+    "FullCapNom": {
+      "addr": 35,
+      "description": "This register holds the calculated full capacity of the cell, not including temperature and empty compensation. A new fullcapacity nominal value is calculated each time a cell relaxation event is detected. This register is used to calculate other outputs of the ModelGauge m5 algorithm.",
+      "initial": 0,
+      "name": "FullCapNom",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "FullCapRep": {
+      "addr": 16,
+      "description": "This register reports the full capacity that goes with RepCap, generally used for reporting to the user. A new full-capacity value is calculated at the end of every charge cycle in the application. ",
+      "initial": 0,
+      "name": "FullCapRep",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "FullSOCThr": {
+      "addr": 19,
+      "description": "The nFullSOCThr register gates detection of end-of-charge. VFSOC must be larger than the nFullSOCThr value before nIChgTerm is compared to the AvgCurrent register value. The recommended nFullSOCThr register setting for most custom characterized applications is 95% . For EZ performance applications, the recommendation is 80% (5005h). See the nIChgTerm register description and End-of-Charge Detection section for details.",
+      "initial": 0,
+      "name": "FullSOCThr",
+      "ones_mask": 5,
+      "size": 1,
+      "unit": "",
+      "value": 0,
+      "zeros_mask": 2
+    },
+    "IAlrtTh": {
+      "CURRMAX": {
+        "description": "An alert is generated if the current register reading exceeds this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the Current register.",
+        "initial": 127,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum Current Threshold",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 127
+      },
+      "CURRMIN": {
+        "description": "An alert is generated if the current register reading falls below this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the Current register.",
+        "initial": 128,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum Current Threshold",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 128
+      },
+      "addr": 172,
+      "description": "The nIAlrtTh register shown in Table 89 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by the Current register value. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 400μV resolution over the full operating range of the Current register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 32640,
+      "name": "IAlrtTh",
+      "size": 1,
+      "value": 32640
+    },
+    "IChgTerm": {
+      "addr": 30,
+      "description": "The nIChgTerm register allows the device to detect when a charge cycle of the cell has completed. nIChgTerm should be programmed to the exact charge termination current used in the application. The device detects end-of-charge if all the following conditions are met: \n- VFSOC Register > FullSOCThr Register\n- AND IChgTerm x 0.125 < Current Register < IChgTerm x 1.25\n- AND IChgTerm x 0.125 < AvgCurrent Register < IChgTerm x 1.25\nSee the End-of-Charge Detection section for more details. \n",
+      "initial": 0,
+      "name": "IChgTerm",
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "LearnCfg": {
+      "LS": {
+        "description": "The Learn Stage value controls the influence of the voltage fuel gauge on the mixing algorithm. Learn Stage defaults to 0h, making the voltage fuel gauge dominate. Learn Stage then advances to 7h over the course of two full cell cycles to make the coulomb counter dominate. Host software can write the Learn Stage value to 7h to advance to the final stage at any time. Writing any value between 1h and 6h is ignored.",
+        "initial": 0,
+        "lsb": 4,
+        "msb": 6,
+        "name": "Learn Stage",
+        "value": 0
+      },
+      "addr": 161,
+      "description": "The nLearnCfg register controls all functions relating to adaptation during operation.",
+      "initial": 18054,
+      "name": "LearnCfg",
+      "ones_mask": 18054,
+      "size": 1,
+      "value": 18054,
+      "zeros_mask": 47369
+    },
+    "Lock": {
+      "addr": 127,
+      "description": "Lock register",
+      "initial": 0,
+      "name": "Lock",
+      "size": 1,
+      "value": 0
+    },
+    "MPPCurrent": {
+      "addr": 169,
+      "initial": 0,
+      "name": "MPPCurrent",
+      "size": 1,
+      "value": 0
+    },
+    "MaxMinCurr": {
+      "MaxCurrent": {
+        "initial": 128,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxCurrent",
+        "signed": true,
+        "step": 0.04,
+        "unit": "",
+        "value": 128
+      },
+      "MinCurrent": {
+        "initial": 127,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinCurrent",
+        "signed": true,
+        "step": 0.04,
+        "unit": "",
+        "value": 127
+      },
+      "addr": 10,
+      "backup": "Periodically saves to nMaxMinCurr (1ABh) if nNVCfg2.enMMC is set, but does not restore from nonvolatile memory.",
+      "description": "The MaxMinCurr register maintains the maximum and minimum Current register values since the last IC reset or until cleared by host software. Each time the Current register updates, it is compared against these values. If the reading is larger than the maximum or less than the minimum, the corresponding value is replaced with the new reading. At powerup, the maximum current value is set to 80h (the minimum) and the minimum current value is set to 7Fh (the maximum). Therefore, both values are changed to the Current register reading after the first update. Host software can reset this register by writing it to its power-up value of 0x807F. The maximum and minimum voltages are each stored as two’s complement 8-bit values with 0.4mV/RSENSE resolution. Table 54 shows the register format. MaxMinCurr is not cumulative across the entire battery lifetime. After each periodic nonvolatile-memory save, MaxMinCurr resets to 0x807F to find the next maximum and minimum current across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum current experienced across only that segment.",
+      "initial": 32895,
+      "name": "MaxMinCurr",
+      "size": 1,
+      "value": 32895
+    },
+    "MaxMinTemp": {
+      "MaxTemperature": {
+        "description": "Maximum Temp register reading (1ºC resolution) ",
+        "initial": 8,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxTemperature",
+        "signed": true,
+        "unit": "",
+        "value": 8
+      },
+      "MinTemperature": {
+        "description": "Minimum Temp register reading (1ºC resolution) ",
+        "initial": 7,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinTemperature",
+        "signed": true,
+        "unit": "",
+        "value": 7
+      },
+      "addr": 9,
+      "backup": "Periodically saves to nMaxMinTemp (1ADh) if nNVCfg2.enMMT is set, but does not restore from nonvolatile memory.",
+      "description": "The MaxMinTemp register maintains the maximum and minimum Temp register (01Bh) values since the last fuel-gauge reset or until cleared by host software. Each time the Temp register updates, it is compared against these values. If the reading is larger than the maximum or less than the minimum, the corresponding values are replaced with the new reading. At power-up, the maximum value is set to 80h (minimum) and the minimum value is set to 7Fh (maximum). Therefore, both values are changed to the Temp register reading after the first update. Host software can reset this register by writing it to its power-up value of 807Fh. The maximum and minimum temperatures are each stored as two’s complement 8-bit values with 1°C resolution. MaxMinTemp is not cumulative across the entire battery lifetime. After each periodic nonvolatile memory save, MaxMinTemp resets to 807Fh to find the next maximum and minimum temperatures across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum temperature experienced across only that segment.",
+      "initial": 2055,
+      "name": "MaxMinTemp",
+      "size": 1,
+      "value": 2055
+    },
+    "MaxMinVolt": {
+      "MaxVCELL": {
+        "description": "Maximum channel voltage reading (20mV resolution)",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxVCELL",
+        "step": 0.02,
+        "unit": "",
+        "value": 0
+      },
+      "MinVCELL": {
+        "description": "Minimum channel voltage reading (20mV resolution)",
+        "initial": 255,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinVCELL",
+        "step": 0.02,
+        "unit": "",
+        "value": 255
+      },
+      "addr": 8,
+      "backup": "Saves to nMaxMinVolt (1ACh) if nNVCfg2.enMMV is set (does not restore from nonvolatile).",
+      "description": "The MaxMinVolt register maintains the maximum and minimum of all cell voltage readings since device reset. Each time the voltage registers update, they are compared against these values. If a new voltage channel reading is larger than the maximum or less than the minimum, the corresponding value is replaced with the new reading. At power-up, the maximum voltage value is set to 00h (the minimum) and the minimum voltage value is set to FFh (the maximum). Therefore, both values are updated after the first update. Host software can reset this register by writing it to its power-up value of 0x00FF. The maximum and minimum voltages are each stored as 8-bit values with a 20mV resolution. MaxMinVolt is not cumulative across the entire battery lifetime. After each periodic nonvolatile-memory save, MaxMinVolt resets to 0x00FF to find the next max/min volt across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum voltage experienced across only that segment.",
+      "initial": 255,
+      "name": "MaxMinVolt",
+      "size": 1,
+      "value": 255
+    },
+    "MaxPeakPower": {
+      "addr": 164,
+      "initial": 0,
+      "name": "MaxPeakPower",
+      "size": 1,
+      "value": 0
+    },
+    "MinCurr": {
+      "addr": 174,
+      "initial": 0,
+      "name": "MinCurr",
+      "size": 1,
+      "value": 0
+    },
+    "MinSysVoltage": {
+      "addr": 168,
+      "initial": 0,
+      "name": "MinSysVoltage",
+      "size": 1,
+      "value": 0
+    },
+    "MinVolt": {
+      "addr": 173,
+      "initial": 0,
+      "name": "MinVolt",
+      "size": 1,
+      "value": 0
+    },
+    "MiscCfg": {
+      "FUS": {
+        "description": "This field prevents jumps in the RepSOC and FullCapRep registers by setting the rate of adjustment of FullCapRep near the end of a charge cycle. The update slope adjustment range is from 2% per 15 minutes (0000b) to a maximum of 32% per 15 minutes (1111b)",
+        "initial": 3,
+        "lsb": 12,
+        "msb": 15,
+        "name": "Full Update Slope",
+        "step": 2.0,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 2.0
+      },
+      "MR": {
+        "description": "This value sets the strength of the servo mixing rate after the final mixing state has been reached (> 2.08 complete cycles). The units are MR0 = 6.25μV, giving a range up to 19.375mA with a standard 0.010Ω sense resistor. Setting this value to 00000b disables servo mixing and the IC continues with time-constant mixing indefinitely. The default setting is 18.75μV or 1.875mA with a standard sense resistor.",
+        "initial": 3,
+        "lsb": 5,
+        "msb": 9,
+        "name": "Mixing Rate",
+        "step": 6.25,
+        "unit": "",
+        "value": 3
+      },
+      "SACFG": {
+        "description": "SOC Alerts can be generated by monitoring any of the SOC registers as follows. SACFG defaults to 00 at power-up.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 1,
+        "name": "SOC Alert Config",
+        "value": 0,
+        "values": {
+          "SACFG_0": {
+            "description": "SOC Alerts are generated based on the RepSOC register.",
+            "value": 0
+          },
+          "SACFG_1": {
+            "description": "SOC Alerts are generated based on the AvSOC register.",
+            "value": 1
+          },
+          "SACFG_2": {
+            "description": "SOC Alerts are generated based on the MixSOC register.",
+            "value": 2
+          },
+          "SACFG_3": {
+            "description": "SOC Alerts are generated based on the VFSOC register.",
+            "value": 3
+          }
+        }
+      },
+      "addr": 15,
+      "description": "The nMiscCfg control register enables various other functions of the device. The nMiscCfg register default values should not be changed unless specifically required by the application. Table 75 shows the register format.",
+      "initial": 12400,
+      "name": "MiscCfg",
+      "ones_mask": 16,
+      "size": 1,
+      "value": 12400,
+      "zeros_mask": 3084
+    },
+    "MixCap": {
+      "addr": 43,
+      "description": "The MixCap register holds the calculated remaining capacity of the cell before any empty compensation adjustments are performed.",
+      "initial": 0,
+      "name": "MixCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "MixSOC": {
+      "addr": 13,
+      "description": "The MixSOC register holds the calculated present state-of-charge of the cell before any empty compensation adjustments are performed. MixSOC corresponds with MixCap and FullCapNom. See the Fuel-Gauge Empty Compensation section for d.",
+      "initial": 0,
+      "name": "MixSOC",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "PCKP": {
+      "addr": 219,
+      "description": "The PCKP register contains the voltage between PACK+ and GND on a 20.48V scale with an LSB of 0.3125mV.",
+      "initial": 0,
+      "name": "PCKP",
+      "size": 1,
+      "step": 0.0003125,
+      "unit": "",
+      "value": 0
+    },
+    "PackResistance": {
+      "addr": 166,
+      "initial": 0,
+      "name": "PackResistance",
+      "size": 1,
+      "value": 0
+    },
+    "Power": {
+      "addr": 177,
+      "description": "Instantaneous power calculation from immediate current and voltage. LSB is 1.6mW with a 5mΩ sense resistor.",
+      "initial": 0,
+      "name": "Power",
+      "size": 1,
+      "value": 0
+    },
+    "ProStatus": {
+      "ChgWDT": {
+        "description": "Charge communication watchdog timer",
+        "initial": 0,
+        "name": "ChgWDT",
+        "position": 15,
+        "value": 0
+      },
+      "DieHot": {
+        "description": "Overtemperature for die temperature",
+        "initial": 0,
+        "name": "DieHot",
+        "position": 5,
+        "value": 0
+      },
+      "Full": {
+        "description": "Full detection",
+        "initial": 0,
+        "name": "Full",
+        "position": 13,
+        "value": 0
+      },
+      "Imbalance": {
+        "description": "Multicell imbalance",
+        "initial": 0,
+        "name": "Imbalance",
+        "position": 7,
+        "value": 0
+      },
+      "OCCP": {
+        "description": "Overcharge current",
+        "initial": 0,
+        "name": "OCCP",
+        "position": 10,
+        "value": 0
+      },
+      "ODCP": {
+        "description": "Overdischarge current",
+        "initial": 0,
+        "name": "ODCP",
+        "position": 2,
+        "value": 0
+      },
+      "OVP": {
+        "description": "Overvoltage",
+        "initial": 0,
+        "name": "OVP",
+        "position": 11,
+        "value": 0
+      },
+      "PermFail": {
+        "description": "Permanent failure",
+        "initial": 0,
+        "name": "PermFail",
+        "position": 6,
+        "value": 0
+      },
+      "PreqF": {
+        "description": "Prequal timeout",
+        "initial": 0,
+        "name": "PreqF",
+        "position": 8,
+        "value": 0
+      },
+      "Qovflw": {
+        "description": "Capacity overflow",
+        "initial": 0,
+        "name": "Qovflw",
+        "position": 9,
+        "value": 0
+      },
+      "ResDFault": {
+        "initial": 0,
+        "name": "ResDFault",
+        "position": 1,
+        "value": 0
+      },
+      "Ship": {
+        "description": "Indicates ship state",
+        "initial": 0,
+        "name": "Ship",
+        "position": 0,
+        "value": 0
+      },
+      "TooColdC": {
+        "description": "Undertemperature while charging",
+        "initial": 0,
+        "name": "TooColdC",
+        "position": 12,
+        "value": 0
+      },
+      "TooHotC": {
+        "description": "Overtemperature while charging",
+        "initial": 0,
+        "name": "TooHotC",
+        "position": 14,
+        "value": 0
+      },
+      "TooHotD": {
+        "initial": 0,
+        "name": "Overtemperature while discharging",
+        "position": 4,
+        "value": 0
+      },
+      "UVP": {
+        "description": "Undervoltage",
+        "initial": 0,
+        "name": "UVP",
+        "position": 3,
+        "value": 0
+      },
+      "addr": 217,
+      "description": "The Protection Status register contains the fault states of the protection state machine.",
+      "initial": 0,
+      "name": "ProStatus",
+      "size": 1,
+      "value": 0
+    },
+    "ProtAlrt": {
+      "ChgWDT": {
+        "description": "Charge communication watchdog timer",
+        "initial": 0,
+        "name": "ChgWDT",
+        "position": 15,
+        "value": 0
+      },
+      "DieHot": {
+        "description": "Overtemperature for die temperature",
+        "initial": 0,
+        "name": "DieHot",
+        "position": 5,
+        "value": 0
+      },
+      "Full": {
+        "description": "Full detection",
+        "initial": 0,
+        "name": "Full",
+        "position": 13,
+        "value": 0
+      },
+      "Imbalance": {
+        "description": "Multicell imbalance",
+        "initial": 0,
+        "name": "Imbalance",
+        "position": 7,
+        "value": 0
+      },
+      "LDet": {
+        "description": "Leakage detection",
+        "initial": 0,
+        "name": "LDet",
+        "position": 0,
+        "value": 0
+      },
+      "OCCP": {
+        "description": "Overcharge current",
+        "initial": 0,
+        "name": "OCCP",
+        "position": 10,
+        "value": 0
+      },
+      "ODCP": {
+        "description": "Overdischarge current",
+        "initial": 0,
+        "name": "ODCP",
+        "position": 2,
+        "value": 0
+      },
+      "OVP": {
+        "description": "Overvoltage",
+        "initial": 0,
+        "name": "OVP",
+        "position": 11,
+        "value": 0
+      },
+      "PermFail": {
+        "description": "Permanent failure",
+        "initial": 0,
+        "name": "PermFail",
+        "position": 6,
+        "value": 0
+      },
+      "PreqF": {
+        "description": "Prequal timeout",
+        "initial": 0,
+        "name": "PreqF",
+        "position": 8,
+        "value": 0
+      },
+      "Qovflw": {
+        "description": "Capacity overflow",
+        "initial": 0,
+        "name": "Qovflw",
+        "position": 9,
+        "value": 0
+      },
+      "ResDFault": {
+        "initial": 0,
+        "name": "ResDFault",
+        "position": 1,
+        "value": 0
+      },
+      "TooColdC": {
+        "description": "Undertemperature while charging",
+        "initial": 0,
+        "name": "TooColdC",
+        "position": 12,
+        "value": 0
+      },
+      "TooHotC": {
+        "description": "Overtemperature while charging",
+        "initial": 0,
+        "name": "TooHotC",
+        "position": 14,
+        "value": 0
+      },
+      "TooHotD": {
+        "initial": 0,
+        "name": "Overtemperature while discharging",
+        "position": 4,
+        "value": 0
+      },
+      "UVP": {
+        "description": "Undervoltage",
+        "initial": 0,
+        "name": "UVP",
+        "position": 3,
+        "value": 0
+      },
+      "addr": 175,
+      "description": "The Protection Alerts register contains a history of any protection events that have been logged by the device. If any bit of ProtAlrt is 1, then the Status.PA bit is also 1 if Config.ProtAlrtEn = 1. Once a bit is set, it remains set until cleared by the host. The Alert pin is driven low if Config.AEn = 1 and Config.ProtAlrtEn = 1. The bits in ProtAlrt mirror the bits in ProtStatus with the exception of the LDET bit.",
+      "initial": 0,
+      "name": "Protection Alert Register",
+      "size": 1,
+      "value": 0
+    },
+    "QH": {
+      "addr": 77,
+      "description": "The QH register displays the raw coulomb count generated by the device. This register is used internally as an input to the mixing algorithm. Monitoring changes in QH over time can be useful for debugging device operation.",
+      "initial": 0,
+      "name": "QH",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "QL": {
+      "addr": 78,
+      "initial": 0,
+      "name": "QL",
+      "size": 1,
+      "value": 0
+    },
+    "QRTable00": {
+      "addr": 18,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 4176,
+      "name": "QRTable00",
+      "size": 1,
+      "value": 0
+    },
+    "QRTable10": {
+      "addr": 34,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 32770,
+      "name": "QRTable10",
+      "size": 1,
+      "value": 0
+    },
+    "QRTable20": {
+      "addr": 50,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 1932,
+      "name": "QRTable20",
+      "size": 1,
+      "value": 0
+    },
+    "QRTable30": {
+      "addr": 66,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 2176,
+      "name": "QRTable30",
+      "size": 1,
+      "value": 0
+    },
+    "QResidual": {
+      "addr": 12,
+      "description": "The QResidual register displays the calculated amount of charge in mAh that is presently inside of, but cannot be removed from the cell under present application conditions. This value is subtracted from the MixCap value to determine the capacity available to the user under present conditions (AvCap).",
+      "initial": 0,
+      "name": "QResidual",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "RCell": {
+      "addr": 20,
+      "description": "The RCell register displays the calculated internal resistance of the cell or the average internal resistance of each cell in the cell stack. RCell is determined by comparing open-circuit voltage (VFOCV) against measured voltage (VCell) over a long time period while under load current.",
+      "initial": 656,
+      "name": "RCell",
+      "size": 1,
+      "step": 0.000244140625,
+      "unit": "",
+      "value": 0
+    },
+    "RComp0": {
+      "addr": 56,
+      "description": "The nRComp0 register holds characterization information critical to computing the open circuit voltage of a cell under loaded conditions.",
+      "initial": 0,
+      "name": "RComp0",
+      "size": 1,
+      "value": 0
+    },
+    "RelaxCfg": {
+      "LOAD": {
+        "description": "Sets the threshold, which the AvgCurrent register is compared against. The AvgCurrent register must remain below this threshold value for the cell to be considered unloaded. Load is an unsigned 7-bit value where 1 LSb = 50μV. The default value is 800μV.",
+        "initial": 16,
+        "lsb": 9,
+        "msb": 15,
+        "name": "LOAD",
+        "step": 50.0,
+        "unit": "",
+        "value": 16
+      },
+      "addr": 160,
+      "dV": {
+        "description": "Sets the threshold, which VCell is compared against. If the cell’s voltage changes by less than dV over two consecutive periods set by dt, the cell is considered relaxed; dV has a range of 0 to 40mV where 1 LSb = 1.25mV. The default value is 3.75mV.",
+        "initial": 3,
+        "lsb": 4,
+        "msb": 8,
+        "name": "dV",
+        "step": 1.25,
+        "unit": "",
+        "value": 3
+      },
+      "description": "The nRelaxCfg register defines how the IC detects if the cell is in a relaxed state. See Figure 28. For a cell to be considered relaxed, current flow through the cell must be kept at a minimum while the change in the cell’s voltage over time, dV/dt, shows little or no change. If AvgCurrent remains below the LOAD threshold while VCell changes less than the dV threshold over two consecutive periods of dt, the cell is considered relaxed.",
+      "dt": {
+        "description": "Sets the time period over which change in VCell is compared against dV. If the cell’s voltage changes by less than dV over two consecutive periods set by dt, the cell is considered relaxed. The default value is 1.5 minutes. The comparison period is calculated as: Relaxation period = 2(dt-8) x 45s",
+        "initial": 9,
+        "lsb": 0,
+        "msb": 3,
+        "name": "dt",
+        "value": 9
+      },
+      "initial": 8249,
+      "name": "RelaxCfg",
+      "size": 1,
+      "value": 8249
+    },
+    "RepCap": {
+      "addr": 5,
+      "description": "RepCap or Reported Capacity is a filtered version of the AvCap register that prevents large jumps in the reported value caused by changes in the application such as abrupt changes in temperature or load current. See the Fuel-Gauge Empty Compensation section f",
+      "initial": 0,
+      "name": "RepCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "RepSOC": {
+      "addr": 6,
+      "description": "RepSOC is a filtered version of the AvSOC register that prevents large jumps in the reported value caused by changes in the application such as abrupt changes in load current. RepSOC corresponds to RepCap and FullCapRep. RepSOC is intended to be the final state-of-charge percentage output for use by the application. See the Fuel-Gauge Empty Compensation section for details.",
+      "initial": 0,
+      "name": "RepSOC",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "SAlrtTh": {
+      "SMAX": {
+        "description": "An alert is generated if the selected SOC register reading exceeds this value. This field has 1% LSb resolution.",
+        "initial": 255,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum state-of-charge reading",
+        "unit": "",
+        "value": 255
+      },
+      "SMIN": {
+        "description": "An alert is generated if the selected SOC register reading falls below this value. This field has 1% LSb resolution.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum state-of-charge reading",
+        "unit": "",
+        "value": 0
+      },
+      "addr": 3,
+      "description": "The nSAlrtTh register shown in Table 88 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by the selected RepSOC, AvSOC, MixSOC, or VFSOC register values. See the MiscCFG.SACFG setting for details. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 1% resolution over the full operating range of the selected SOC register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 65280,
+      "name": "SAlrtTh",
+      "size": 1,
+      "value": 65280
+    },
+    "SOCHold": {
+      "99%HoldEn": {
+        "description": "Enable bit for 99% hold feature during charging. When enabled, RepSOC holds a maximum value of 99% until Full Qualified is reached.",
+        "initial": 0,
+        "name": "99%HoldEn",
+        "position": 12,
+        "value": 0
+      },
+      "EmptySocHold": {
+        "description": "It is the RepSOC at which RepSOC is held constant. After empty detection/learning occurs, RepSOC update continues as expected. EmptySocHold has an LSb of 0.5%, giving it a full range of 0 to 15.5%.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 4,
+        "name": "EmptySocHold",
+        "step": 0.5,
+        "unit": "",
+        "value": 0
+      },
+      "EmptyVoltHold": {
+        "description": "The positive voltage offset that is added to VEmpty. At VCell = VEmpty + EmptyVoltHold point, the empty detection/learning is occured. EmptyVoltHold has an LSb of 10mV giving a range of 0 to 1270mV.",
+        "initial": 0,
+        "lsb": 5,
+        "msb": 11,
+        "name": "EmptyVoltHold",
+        "step": 0.01,
+        "unit": "",
+        "value": 0
+      },
+      "addr": 208,
+      "description": "The SOCHold register configures operation of the hold before empty feature and also the enable bit for 99% hold during charge. The default value for SOCHold is 1002h.",
+      "initial": 0,
+      "name": "SOCHold",
+      "size": 1,
+      "value": 0,
+      "zeros_mask": 57344
+    },
+    "SPPCurrent": {
+      "addr": 170,
+      "initial": 0,
+      "name": "SPPCurrent",
+      "size": 1,
+      "value": 0
+    },
+    "Status": {
+      "Imn": {
+        "description": "This bit is set to a 1 whenever a Current register reading is below the minimum IAlrtTh value. This bit is cleared automatically when Current rises above minimum IAlrtTh value.",
+        "initial": 0,
+        "name": "Minimum Current Alert Threshold Exceeded",
+        "position": 2,
+        "value": 0
+      },
+      "Imx": {
+        "description": "This bit is set to a 1 whenever a Current register reading is above the maximum IAlrtTh value. This bit is cleared automatically when Current falls below maximum IAlrtTh value.",
+        "initial": 0,
+        "name": "Maximum Current Alert Threshold Exceeded",
+        "position": 6,
+        "value": 0
+      },
+      "PA": {
+        "description": "This bit is set to a 1 when there is a protection event. The details of which protection event can be found in the ProtAlrts register. This bit must be cleared by system software to detect the next protection event. However, prior to clearing this bit, the ProtAlrts register must first be written to 0x0000.",
+        "initial": 0,
+        "name": "Protection Alert",
+        "position": 15,
+        "value": 0
+      },
+      "POR": {
+        "description": "This bit is set to a 1 when the device detects that a software or hardware POR event has occurred. This bit must be cleared by system software to detect the next POR event.",
+        "initial": 1,
+        "name": "Power-On Reset",
+        "position": 1,
+        "value": 1
+      },
+      "Smn": {
+        "description": "This bit is set to a 1 whenever SOC falls below the minimum SAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.SS and MiscCFG.SACFG bit descriptions.",
+        "initial": 0,
+        "name": "Minimum SOC Alert Threshold Exceeded",
+        "position": 10,
+        "value": 0
+      },
+      "Smx": {
+        "description": "This bit is set to a 1 whenever SOC rises above the maximum SAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.SS andMiscCFG.SACFG bit descriptions.",
+        "initial": 0,
+        "name": "Maximum SOC Alert Threshold Exceeded",
+        "position": 14,
+        "value": 0
+      },
+      "Tmn": {
+        "description": "This bit is set to a 1 whenever a Temperature register reading is below the minimum TAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.TS bit description.",
+        "initial": 0,
+        "name": "Minimum Temperature Alert Threshold Exceeded",
+        "position": 9,
+        "value": 0
+      },
+      "Tmx": {
+        "description": "This bit is set to a 1 whenever a Temperature register reading is above the maximum TAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.TS bit description.",
+        "initial": 0,
+        "name": "Maximum Temperature Alert Threshold Exceeded",
+        "position": 13,
+        "value": 0
+      },
+      "Vmn": {
+        "description": "This bit is set to a 1 whenever a VCell register reading is below the minimum VAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.VS bit description.",
+        "initial": 0,
+        "name": "Minimum Voltage Alert Threshold Exceeded",
+        "position": 8,
+        "value": 0
+      },
+      "Vmx": {
+        "description": "This bit is set to a 1 whenever a VCell register reading is above the maximum VAlrtTh value. This bit may or may not need to be cleared by system software to detect the next event. See Config.VS bit description.",
+        "initial": 0,
+        "name": "Maximum Voltage Alert Threshold Exceeded",
+        "position": 12,
+        "value": 0
+      },
+      "addr": 0,
+      "dSOCi": {
+        "description": "This is set to 1 whenever the RepSOC register crosses an integer percentage boundary such as 50.0%, 51.0%, etc. Must be cleared by host software.",
+        "initial": 0,
+        "name": "State-of-Charge 1% Change Alert",
+        "position": 7,
+        "value": 0
+      },
+      "description": "The Status register maintains all flags related to alert thresholds and battery insertion or removal.",
+      "initial": 2,
+      "name": "Status",
+      "size": 1,
+      "value": 2,
+      "x_mask": 2105
+    },
+    "Status2": {
+      "Hib": {
+        "description": "This bit is set to a 1 when the device is in hibernate mode or 0 when the device is in active mode. Hib is set to 0 at power-up.",
+        "initial": 0,
+        "name": "Hibernate Status",
+        "position": 1,
+        "value": 0
+      },
+      "addr": 176,
+      "initial": 0,
+      "name": "Status2",
+      "size": 1,
+      "value": 0,
+      "x_mask": 65533
+    },
+    "SusPeakPower": {
+      "addr": 165,
+      "initial": 0,
+      "name": "SusPeakPower",
+      "size": 1,
+      "value": 0
+    },
+    "SysResistance": {
+      "addr": 167,
+      "initial": 0,
+      "name": "SysResistance",
+      "size": 1,
+      "value": 0
+    },
+    "TAlrtTh": {
+      "TMAX": {
+        "description": "An alert is generated if any temperature channel reading exceeds this value. This field is signed 2's complement format with 1ºC LSb resolution.",
+        "initial": 127,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum temperature reading",
+        "signed": true,
+        "unit": "",
+        "value": 127
+      },
+      "TMIN": {
+        "description": "An alert is generated if the Temp register reading falls below this value. This field is signed 2's complement format with 1ºC LSb resolution.",
+        "initial": 128,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum temperature reading",
+        "signed": true,
+        "unit": "",
+        "value": 128
+      },
+      "addr": 2,
+      "description": "The nTAlrtTh register sets upper and lower limits that generate an ALRT pin interrupt if exceeded by any thermistor reading. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are stored in 2’s-complement format with 1ºC resolution over the full operating range of the Temp register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 32640,
+      "name": "TAlrtTh",
+      "size": 1,
+      "value": 32640
+    },
+    "TTE": {
+      "addr": 17,
+      "description": "The TTE register holds the estimated time-to-empty for the application under present temperature and load conditions. The TTE value is determined by dividing the AvCap register by the AvgCurrent register. The corresponding AvgCurrent filtering gives a delay in TTE empty, but provides more stable results. The TTE register has a maximum value of 102.3 hours. When TTE is larger than the maximum value, the TTE register saturates and contains the maximum value (FFFFh). The host can calculate times longer than the maximum value with the following equation: TTECALCULATED (hours) = AvCap(mAh)/AvgCurrent(mA)",
+      "initial": 0,
+      "name": "time to empty",
+      "size": 1,
+      "step": 5.6195068359375,
+      "unit": "",
+      "value": 0
+    },
+    "TTF": {
+      "addr": 32,
+      "description": "The TTF register holds the estimated time-to-full for the application under present conditions. The TTF value is determined by learning the constant current and constant voltage portions of the charge cycle based on experience of prior charge cycles. Time-to-full is then estimated by comparing the present charge current to the charge termination current. Operation of the TTF register assumes all charge profiles are consistent in the application. See the nTTFCfg for configuration and the Typical Operating Characteristics for sample performance.",
+      "initial": 0,
+      "name": "TTF",
+      "size": 1,
+      "step": 5.625,
+      "unit": "",
+      "value": 0
+    },
+    "TTFCfg": {
+      "addr": 181,
+      "initial": 0,
+      "name": "TTFCfg",
+      "size": 1,
+      "value": 0
+    },
+    "Temp": {
+      "addr": 27,
+      "description": "The Temp register is the input to the fuel gauge algorithm. The Temp register reflects the highest thermistor temperature if enabled, and the die-temperature if the thermistors are disabled.",
+      "initial": 0,
+      "name": "Temp",
+      "signed": true,
+      "size": 1,
+      "step": 0.00390625,
+      "unit": "",
+      "value": 0
+    },
+    "TempCo": {
+      "addr": 57,
+      "description": "The nTempCo register holds temperature compensation information for the nRComp0 register value.",
+      "initial": 0,
+      "name": "TempCo",
+      "size": 1,
+      "value": 0
+    },
+    "Timer": {
+      "addr": 62,
+      "description": "This register holds timing information for the fuel gauge. It is available to the user for debugging purposes. The Timer register LSb is equal to 175.8ms giving a full-scale range of 0 to 3.2 hours.",
+      "initial": 0,
+      "name": "Timer",
+      "size": 1,
+      "step": 0.1758,
+      "unit": "",
+      "value": 0
+    },
+    "TimerH": {
+      "addr": 190,
+      "backup": "nTimerH (1AFh) if nNVCfg2.enT is set",
+      "description": "This register allows the IC to track the age of the cell. An LSb of 3.2 hours gives a full-scale range for the register of up to 23.94 years. If enabled, this register is periodically backed up to nonvolatile memory as part of the learning function.",
+      "initial": 0,
+      "name": "TimerH",
+      "size": 1,
+      "step": 3.2,
+      "unit": "nTimerH (1AFh) if nNVCfg2.enT is set",
+      "value": 0
+    },
+    "VAlrtTh": {
+      "VMAX": {
+        "description": "An alert is generated if the maximum cell voltage reading exceeds this value. This field has 20mV LSb resolution.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum voltage reading",
+        "step": 0.02,
+        "unit": "",
+        "value": 0
+      },
+      "VMIN": {
+        "description": "An alert is generated if the VCell register reading falls below this value. This field has 20mV LSb resolution.",
+        "initial": 255,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum voltage reading",
+        "step": 0.02,
+        "unit": "",
+        "value": 255
+      },
+      "addr": 1,
+      "description": "The nVAlrtTh register shown in Table 86 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by any of the cell voltage readings. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 20mV resolution over the full operating range of the VCell register. At powerup, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 255,
+      "name": "VAlrtTh",
+      "size": 1,
+      "value": 255
+    },
+    "VCell": {
+      "addr": 26,
+      "description": "Each update cycle the lowest reading from all cell voltage measurements is placed in the VCell register. VCell is used as the voltage input to the fuel gauge algorithm.",
+      "initial": 0,
+      "name": "VCell",
+      "size": 1,
+      "step": 0.078125,
+      "unit": "",
+      "value": 0
+    },
+    "VEmpty": {
+      "VE": {
+        "description": "Sets the voltage level for detecting empty. A 10mV resolution gives a 0 to 5.11V range. This value is written to 3.3V after reset if nonvolatile backup is disabled.",
+        "initial": 300,
+        "lsb": 7,
+        "msb": 15,
+        "name": "Empty Voltage",
+        "step": 0.01,
+        "unit": "",
+        "value": 300
+      },
+      "VR": {
+        "description": "Sets the voltage level for clearing empty detection. Once the cell voltage rises above this point, empty voltage detection is re-enabled. A 40mV resolution gives a 0 to 5.08V range. This value is written to 3.88V after reset if nonvolatile backup is disabled.",
+        "initial": 89,
+        "lsb": 0,
+        "msb": 6,
+        "name": "Recovery Voltage",
+        "step": 0.04,
+        "unit": "",
+        "value": 89
+      },
+      "addr": 58,
+      "description": "The nVempty register sets thresholds related to empty detection during operation.",
+      "initial": 38489,
+      "name": "VEmpty",
+      "size": 1,
+      "value": 38489
+    },
+    "VFRemCap": {
+      "addr": 74,
+      "description": "The VFRemCap register holds the remaining capacity of the cell as determined by the voltage fuel gauge before any empty compensation adjustments are performed.",
+      "initial": 0,
+      "name": "VFRemCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "VRipple": {
+      "addr": 178,
+      "description": "The VRipple register holds the slow average RMS value of the VCell register reading variation compared to the AvgVCell register. The default filter time is 22.5s. See the nRippleCfg register description. VRipple has an LSb weight of 1.25mV/ 128.",
+      "initial": 0,
+      "name": "VRipple",
+      "size": 1,
+      "step": 0.009765625,
+      "value": 0
+    },
+    "base_addr": 0,
+    "defaults": {
+      "access": "r",
+      "addr": "undefined",
+      "backup": "none",
+      "i2c_addr": 108,
+      "initial": 0,
+      "ones_mask": 0,
+      "signed": false,
+      "size": 1,
+      "x_mask": 0,
+      "zeros_mask": 0
+    },
+    "nAgeFcCfg": {
+      "CycleStart": {
+        "description": "Sets the number of cell cycles before age forecasting calculations begin. CycleStart has a range of 0.00 to 81.92 cycles with an LSb of 0.64 cycles. Since age forecasting estimation becomes more accurate over time, most applications use a default value of 30 cycles.",
+        "initial": 0,
+        "lsb": 5,
+        "msb": 11,
+        "name": "CycleStart",
+        "step": 0.64,
+        "unit": "",
+        "value": 0
+      },
+      "DeadTargetRatio": {
+        "description": "Sets the remaining percentage of initial cell capacity where the cell is considered fully aged. DeadTargetRatio can be adjusted between 75% and 86.72% with an LSb of 0.7813%. For example, if age forecasting was configured to estimate the number of cycles until the cell’s capacity dropped to 85.1574% of when it was new, DeadTargetRatio should be programmed to 1101b.",
+        "initial": 0,
+        "lsb": 12,
+        "msb": 15,
+        "name": "DeadTargetRatio",
+        "step": 0.7813,
+        "unit": "",
+        "value": 0,
+        "zero_code_value": 75.0
+      },
+      "addr": 482,
+      "description": "The nAgeFcCfg register is used to configure the age forecasting functionality. Register data is nonvolatile and is typically configured only once during pack assembly.",
+      "initial": 0,
+      "name": "nAgeFcCfg",
+      "ones_mask": 3,
+      "size": 1,
+      "value": 0,
+      "zeros_mask": 28
+    },
+    "nBALTh": {
+      "BALCFG": {
+        "description": "This field sets the cell balancing voltage threshold. When set to 0, cell balancing is disabled. When BALCFG bits are set to any nonzero value, cell balancing begins when inside the cell balancing window as shown in Figure 23. See RMismatch section for details.",
+        "initial": 0,
+        "lsb": 10,
+        "msb": 12,
+        "name": "Balancing Configuration",
+        "value": 0
+      },
+      "Imbalance": {
+        "description": "Set the amount of cell imbalance that creates a charge protection fault. Set Imbalance to 0 to disable cell imbalance protection. The LSB size is 10mV.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 4,
+        "name": "Cell Imbalance Protection Threshold",
+        "step": 10.0,
+        "unit": "",
+        "value": 0
+      },
+      "Rmismatch": {
+        "description": "Rmismatch is set according to the following equation: nBalTh.Rmismatch = 32 x Rmismatch(mΩ)/125mΩ (maximum settable Rmismatch is 121mΩ). Choose Rmismatch in mΩ approximately 20% of nominal battery resistance. The default recommendation is nBalTh.Rmismatch = 3 corresponding with 11.7mΩ. See the RMismatch section for details.",
+        "initial": 0,
+        "lsb": 5,
+        "msb": 9,
+        "name": "Balancing Configuration",
+        "value": 0
+      },
+      "Zener": {
+        "description": "Set to 1 to enable the Zener Balancing functionality. Set to 0 to disable the Zener Balancing. When Zener Balancing is enabled, the IC acts as if a Zener diode is placed in parallel with each cell. The reverse breakdown voltage of the virtual Zener diode is the ChargingVoltage register. Whenever nBalTh.Zener = 1, the IC enables an internal FET to shunt current away from the highest voltage cell with a voltage higher than the ChargingVoltage register.",
+        "initial": 0,
+        "name": "Zener Balancing Enable",
+        "position": 13,
+        "value": 0
+      },
+      "addr": 468,
+      "description": "Sets the balancing and imbalance settings and thresholds.",
+      "initial": 0,
+      "name": "nBALTh",
+      "size": 1,
+      "value": 0,
+      "zeros_mask": 49152
+    },
+    "nBattStatus": {
+      "CFETFs": {
+        "description": "If the IC detects that the charge FET is shorted and cannot be opened, it sets the CFETFs bit and the PermFail bit. This function is enabled with nProtCfg.FetPFEn.",
+        "initial": 0,
+        "name": "Charge FET failure-short detected",
+        "position": 12,
+        "value": 0
+      },
+      "ChksumF_UVPF": {
+        "description": "ChksumF related: NVM configuration registers checksum failure. In the case of a checksum failure, the device sets the PermFail bit but does not write it to NVM in order to prevent using an additional NVM write. This allows the PermFail bit to be cleared by the host so that the INI file can be reloaded.\nUVPF related: This bit is set when VCell is less than the UnderVoltage Permanent Failure Threshold.",
+        "initial": 0,
+        "name": "Checksum Failure or Undervoltage Permanent Failure",
+        "position": 8,
+        "value": 0
+      },
+      "DFETFs": {
+        "description": "If the IC detects that the discharge FET is shorted and cannot be opened, it sets the DFETFs and the PermFail bit. This function is enabled with nProtCfg.FetPFEn.",
+        "initial": 0,
+        "name": "Discharge FET failure-short detected",
+        "position": 11,
+        "value": 0
+      },
+      "FETFo": {
+        "description": "If the IC detects an open FET failure it sets FETFo. In this case, if the IC detects either CHG or DIS FET to have failed open, then it sets FETFo. This function is enabled with nProtCfg.FetPFEn.",
+        "initial": 0,
+        "name": "Discharge FET failure open",
+        "position": 10,
+        "value": 0
+      },
+      "LDet": {
+        "description": "This bit is set when a leakage detection fault has been detected.",
+        "initial": 0,
+        "name": "Leakage Detection Fault",
+        "position": 9,
+        "value": 0
+      },
+      "LeakCurr": {
+        "description": "Leakage current is an unsigned 8-bit result of leakage current from self-discharge in a cell. This field saves the leakage current from the LeakCurrRep register. The LSB for this field is 3.125μV (or 0.625mA with a 5mΩ RSENSE with a range of 0mA to 159.375mA).",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Leakage Current",
+        "step": 3.125,
+        "unit": "",
+        "value": 0
+      },
+      "OTPF": {
+        "initial": 0,
+        "name": "Overtemperature Protection Failure",
+        "position": 13,
+        "value": 0
+      },
+      "OVPF": {
+        "initial": 0,
+        "name": "Overvoltage Protection Failure",
+        "position": 14,
+        "value": 0
+      },
+      "PermFail": {
+        "description": "This bit is set if any permanent failure is detected.",
+        "initial": 0,
+        "name": "Permanent Failure",
+        "position": 15,
+        "value": 0
+      },
+      "addr": 424,
+      "description": "The Battery Status register contains the permanent battery status information. If nProtCfg.PFen = 1, then a permanent fail results in permanently turning the FETs off to ensure the safety of the battery and the PFAIL pin is driven high.",
+      "initial": 0,
+      "name": "nBattStatus",
+      "size": 1,
+      "value": 0
+    },
+    "nCGTempCo": {
+      "addr": 457,
+      "description": "Set nNVCfg2.enMet = 1 to use CGTempCo to adjust current measurements for temperature. CGTempCo has a range of 0% to 3.1224% per degrees Celsius with a step size of 3.1224/65536 percent per degrees Celsius. If the nNVCfg1.enMtl bit is clear CGTempCo defaults to a value of 20C8h (compensation for copper) or 0.4% per degrees Celsius which is the approximate temperature coefficient of a copper trace. If the nNVCfg1.enMtl bit is set CGTempCo restores from nCGTempCo (1C9h) after IC reset allowing a custom sense resistor temperature coefficient to be used. Factory Default Value: 0000h. Alternate Initial Value: 20C8h.",
+      "initial": 8392,
+      "name": "nCGTempCo",
+      "size": 1,
+      "step": 4.764404296875e-05,
+      "unit": "",
+      "value": 0
+    },
+    "nCGain": {
+      "CGain": {
+        "description": "The recommended default value of CGain = 0x100 corresponds to a gain of 1. CGain can be calculated as follows: CGain = ((MeasuredCurrent/ReportedCurrent) × 0x0100). CGain is a signed value and can be negative.",
+        "initial": 256,
+        "lsb": 6,
+        "msb": 15,
+        "name": "CGain",
+        "signed": true,
+        "value": 256
+      },
+      "COff": {
+        "description": "COff has a range of -32 to +31 LSbs. However, it is normally not recommended to calibrate COff. COff = 0 is recommended for most applications.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 5,
+        "name": "COff",
+        "signed": true,
+        "value": 0
+      },
+      "addr": 456,
+      "description": "The nCGain register adjusts the gain and offset of the current measurement result. The current measurement ADC is factory trimmed to data-sheet accuracy without the need for the user to make further adjustments. The recommended default for the nCGain register is 0x4000 which applies no adjustments to the Current register reading. For specific application requirements, the CGain and COff values can be used to adjust readings as follows: Current Register = (Current ADC Reading × (CGain/256)) + COff",
+      "initial": 16384,
+      "name": "nCGain",
+      "size": 1,
+      "value": 16384
+    },
+    "nChgCfg": {
+      "HeatLim": {
+        "description": "Set HeatLim to limit the thermal dissipation in the protection FETs during prequal regulation. Set HeatLim from 102mW to 819mW in 102mW steps. The effective power-dissipation limit is (HeatLim + 1) x 102mW.",
+        "initial": 3,
+        "lsb": 5,
+        "msb": 7,
+        "name": "HeatLim",
+        "step": 102.0,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 102.0
+      },
+      "PreChgCurr": {
+        "description": "Sets the precharging current for the ChargingCurrent register. Precharge current is calculated as: PreChargeCurrent = nJEITAC.RoomChargingCurrent x (PreChgCurr + 1)/128 (range from RoomChargingCurrent/128 to RoomChargingCurrent/4)",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 4,
+        "name": "PreChgCurr",
+        "value": 1
+      },
+      "PreQualVolt": {
+        "description": "Sets the prequal voltage. Prequal Voltage = UVP + PreQualVolt x 20mV, PreQualVolt is a signed 2's compliment value with range of UVP – 320mV to UVP + 300mV.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 12,
+        "name": "Prequal Voltage Offset",
+        "signed": true,
+        "step": 20.0,
+        "unit": "",
+        "value": 0
+      },
+      "addr": 450,
+      "description": "Configure the settings of prequal charging. Set nProtCfg.PreqEn to enable the prequal charging feature and nChgCtl (1C3h) = 00E1h for proper operation. The IC regulates the CHG gate voltage in order to control/limit the following:\n- Charge Current\n- CHG FET and DIS FET Temperature (using DieTemp)\nWhen a charge source is applied, the charge FET is slowly turned on by the IC to allow the current to flow. It may take approximately 1 minute for the charge current to begin to flow when in prequal mode.",
+      "initial": 8289,
+      "name": "Prequal Configuration",
+      "ones_mask": 8192,
+      "size": 1,
+      "value": 8289,
+      "zeros_mask": 49152
+    },
+    "nChgCtrl": {
+      "addr": 451,
+      "initial": 225,
+      "name": "nChgCtrl",
+      "size": 1,
+      "value": 0
+    },
+    "nConfig": {
+      "Aen": {
+        "description": "When Aen = 1, violation of any of the alert threshold register values by temperature, voltage, or SOC triggers an alert. This bit affects the ALRT pin operation only. The Smx, Smn, Tmx, Tmn, Vmx, Vmn, Imx, and Imn bits of the Status register (000h) are not disabled. Note that if this bit is set to 1, the ALSH bit should be set to 0 to prevent an alert condition from causing the device to enter shutdown mode.",
+        "initial": 0,
+        "name": "Enable Alert on Fuel-Gauge Outputs",
+        "position": 2,
+        "value": 0
+      },
+      "COMMSH": {
+        "description": "Set to logic 1 to force the device to enter shutdown mode if both SDA and SCL are held low (I2C version) or DQ is held low (1-Wire version) for more than the timeout of the ShdnTimer register. This also configures the device to wake up on a rising edge of any communication. Note that if COMMSH is set to 0, the device wakes up an edge of any of the SDA/DQ or SCL/OD pins. See the Modes of Operation section.",
+        "initial": 0,
+        "name": "Communication Shutdown",
+        "position": 6,
+        "value": 0
+      },
+      "DisBlockRead": {
+        "description": "Set DisBlockRead to 1 for normal read access in the 16h memory space. Clear DisBlockRead to 0 to enable SBS block reads when SBS Mode is enabled with nNVCfg0.SBSen. The default setting for DisBlockRead is 1.",
+        "initial": 1,
+        "name": "Disable SBS Block Read",
+        "position": 9,
+        "value": 1
+      },
+      "DisLDO": {
+        "description": "Set DisLDO to 1 to disable the Always-On LDO if it is enabled in nPackCfg.AOCfg.",
+        "initial": 0,
+        "name": "Disable AOLDO",
+        "position": 11,
+        "value": 0
+      },
+      "ETHRM": {
+        "description": "Set to logic 1 to enable the automatic TH output bias and TH measurement.",
+        "initial": 1,
+        "name": "Enable Thermistor",
+        "position": 4,
+        "value": 1
+      },
+      "FTHRM": {
+        "description": "This allows the host to control the bias of the thermistor switch or enable fast detection of battery removal. Set FTHRM = 1 to always enable the thermistor bias switch. With a standard 10kΩ thermistor, this adds an additional 200μA, approximately, to the current drain of the circuit.",
+        "initial": 0,
+        "name": "Force Thermistor Bias Switch",
+        "position": 3,
+        "value": 0
+      },
+      "PAen": {
+        "description": "Set PAen = 1 to enable this feature that saves the protector faults (TooHotC, TooColdC, OVP, OCCP, DieHot, TooHotD, UVP, ODCP, LDet) into the low byte of the nBattStatus register. After each life logging write to NVM, the low byte of nBattStatus is cleared.",
+        "initial": 0,
+        "name": "Protection Alert Enable",
+        "position": 15,
+        "value": 0
+      },
+      "PBEn": {
+        "description": "Set PBEn = 1 to enable wakeup by pushbutton. This application allows a product to be completely sealed with battery disconnected until a shared system button is pressed.",
+        "initial": 0,
+        "name": "Pushbutton Enable",
+        "position": 10,
+        "value": 0
+      },
+      "SHIP": {
+        "description": "Write this bit to logic 1 to force into ship or deepship mode based on nProtCfg.DeepShpEn. Both FETs open within 1.4s and the IC will fully enter ship or deepship after timeout of the Shutdown Timer register which is configured in nDelayCfg.UVPTimer. SHIP is reset to 0 at power-up and upon exiting ship or deepship mode.",
+        "initial": 1,
+        "name": "Ship or Deepship Command",
+        "position": 7,
+        "value": 1
+      },
+      "SS": {
+        "description": "When SS = 1, SOC alerts can only be cleared through software. When SS = 0, SOC alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 0,
+        "name": "SOC ALRT Sticky",
+        "position": 14,
+        "value": 0
+      },
+      "TS": {
+        "description": "When TS = 1, temperature alerts can only be cleared through software. When TS = 0, temperature alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 1,
+        "name": "Temperature ALRT Sticky",
+        "position": 13,
+        "value": 1
+      },
+      "VS": {
+        "description": "When VS = 1, voltage alerts can only be cleared through software. When VS = 0, voltage alerts are cleared automatically when the threshold is no longer exceeded.",
+        "initial": 0,
+        "name": "Voltage ALRT Sticky",
+        "position": 12,
+        "value": 0
+      },
+      "addr": 432,
+      "dSOCen": {
+        "description": "Set this bit to 1 to enable the Status.dSOCi bit function. Write this bit to 0 to disable the Status.dSOCi bit. This bit is set to 0 at power-up.",
+        "initial": 0,
+        "name": "SOC Change Alert Enable",
+        "position": 1,
+        "value": 0
+      },
+      "initial": 8848,
+      "name": "nConfig",
+      "size": 1,
+      "value": 8848
+    },
+    "nConvgCfg": {
+      "MinSlopeX": {
+        "description": "Sets the amount of slope shallowing which occurs when RepSOC falls below RepLow. MinSlopeX LSb corresponds to a ratio of 1/16 giving a full range of 0 to 15/16.",
+        "initial": 8,
+        "lsb": 3,
+        "msb": 6,
+        "name": "MinSlopeX",
+        "step": 0.0625,
+        "value": 8
+      },
+      "RepL_per_stage": {
+        "description": "Adjusts the RepLow threshold setting depending on the present learn stage using the following equation. This allows the RepLow threshold to be at higher levels for earlier learn states. RepL_per_stage has an LSb of 1% giving a range of 0% to 7%. RepLow Threshold = RepLow Field Setting + RemainingStages x RepL_per_stage",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 2,
+        "name": "RepL_per_stage",
+        "unit": "",
+        "value": 1
+      },
+      "RepLow": {
+        "description": "Sets the threshold below which RepCap begins to bend upwards. The RepLow field LSb is 2% giving a full scale range from 0% to 30%.",
+        "initial": 2,
+        "lsb": 12,
+        "msb": 15,
+        "name": "RepLow",
+        "step": 2.0,
+        "unit": "",
+        "value": 2
+      },
+      "VoltLowOff": {
+        "description": "When the AvgVCell register value drops below the VoltLow threshold, RepCap begins to bend downwards by a ratio defined by the following equation. VoltLowOff has an LSb of 20mV giving a range of 0 to 620mV. (AvgVCell - VEmpty)/VoltLowOff",
+        "initial": 4,
+        "lsb": 7,
+        "msb": 11,
+        "name": "VoltLowOff",
+        "step": 20.0,
+        "unit": "",
+        "value": 4
+      },
+      "addr": 439,
+      "description": "The nConvgCfg register configures operation of the converge-to-empty feature. The nNVCfg1.CTE bit must be set to enable converge-to-empty functionality. If nNVCfg1.CTE is clear, this register can be used as general-purpose data storage.",
+      "initial": 8769,
+      "name": "nConvgCfg",
+      "size": 1,
+      "value": 8769
+    },
+    "nCycles": {
+      "addr": 420,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 0,
+      "name": "nCycles",
+      "size": 1,
+      "value": 0
+    },
+    "nDPLimit": {
+      "addr": 480,
+      "initial": 0,
+      "name": "nDPLimit",
+      "size": 1,
+      "value": 0
+    },
+    "nDelayCfg": {
+      "CHGWDT": {
+        "description": "Set CHGWDT to configure the charger communication watchdog timer. If enabled, the IC charge-protects whenever the host has stopped communicating longer than this timeout.",
+        "initial": 2,
+        "lsb": 14,
+        "msb": 15,
+        "name": "CHGWDT",
+        "value": 2,
+        "values": {
+          "CHGWDT_0": {
+            "description": "11.2s to 22.5s",
+            "value": 0
+          },
+          "CHGWDT_1": {
+            "description": "22.5s to 45s",
+            "value": 1
+          },
+          "CHGWDT_2": {
+            "description": "45s to 90s",
+            "value": 2
+          },
+          "CHGWDT_3": {
+            "description": "90s to 3min",
+            "value": 3
+          }
+        }
+      },
+      "OVPTimer": {
+        "description": "Set OVPTimer to configure the fault timing for Overvoltage-Protection.",
+        "initial": 1,
+        "lsb": 9,
+        "msb": 10,
+        "name": "OVPTimer",
+        "value": 1,
+        "values": {
+          "OVPTimer_0": {
+            "description": "0 to 351ms",
+            "value": 0
+          },
+          "OVPTimer_1": {
+            "description": "2.8s to 5.625s",
+            "value": 1
+          },
+          "OVPTimer_2": {
+            "description": "5.625s to 11.25s",
+            "value": 2
+          },
+          "OVPTimer_3": {
+            "description": "11.25s to 22.5s",
+            "value": 3
+          }
+        }
+      },
+      "OverCurrTimer": {
+        "description": "OverCurrTimer configures the fault timing for the slow overcharge-current detection (OCCP) as well as overdischarge-current detection (ODCP). The additional fast hardware protection thresholds are described in nODSCCfg and nODSCTh.",
+        "initial": 4,
+        "lsb": 6,
+        "msb": 8,
+        "name": "OverCurrTimer",
+        "value": 4,
+        "values": {
+          "OverCurrTimer_0": {
+            "description": "0-351ms",
+            "value": 0
+          },
+          "OverCurrTimer_1": {
+            "description": "0.351s to 0.7s",
+            "value": 1
+          },
+          "OverCurrTimer_2": {
+            "description": "0.7s to 1.4s",
+            "value": 2
+          },
+          "OverCurrTimer_3": {
+            "description": "1.4s to 2.8s",
+            "value": 3
+          },
+          "OverCurrTimer_4": {
+            "description": "2.8s to 5.6s",
+            "value": 4
+          },
+          "OverCurrTimer_5": {
+            "description": "5.6s to 11.25s",
+            "value": 5
+          },
+          "OverCurrTimer_6": {
+            "description": "11.25s to 22.5s",
+            "value": 6
+          },
+          "OverCurrTimer_7": {
+            "description": "22.5s to 45s",
+            "value": 7
+          }
+        }
+      },
+      "PermFailTimer": {
+        "description": "Set PermFailTimer to configure the fault-timing for permanent failure detection. PermFailTimer must be set to 3 for permanent failure detection to function properly.",
+        "initial": 3,
+        "lsb": 4,
+        "msb": 5,
+        "name": "PermFailTimer",
+        "value": 3,
+        "values": {
+          "PermFailTimer_0": {
+            "description": "0 to 351ms",
+            "value": 0
+          },
+          "PermFailTimer_1": {
+            "description": "351ms to 0.7s",
+            "value": 1
+          },
+          "PermFailTimer_2": {
+            "description": "0.7s to 1.4s",
+            "value": 2
+          },
+          "PermFailTimer_3": {
+            "description": "1.4s to 2.8s",
+            "value": 3
+          }
+        }
+      },
+      "PrequalTimer": {
+        "description": "Set Prequal Timer to configure the timing for prequal charging.",
+        "initial": 5,
+        "lsb": 11,
+        "msb": 13,
+        "name": "PrequalTimer",
+        "value": 5,
+        "values": {
+          "PrequalTimer_0": {
+            "description": "16.875s to 22.5s",
+            "value": 0
+          },
+          "PrequalTimer_1": {
+            "description": "33s to 44s",
+            "value": 1
+          },
+          "PrequalTimer_2": {
+            "description": "67s to 90s",
+            "value": 2
+          },
+          "PrequalTimer_3": {
+            "description": "2.25min to 3min",
+            "value": 3
+          },
+          "PrequalTimer_4": {
+            "description": "4.5min to 6min",
+            "value": 4
+          },
+          "PrequalTimer_5": {
+            "description": "9min to 12min",
+            "value": 5
+          },
+          "PrequalTimer_6": {
+            "description": "18min to 24min",
+            "value": 6
+          },
+          "PrequalTimer_7": {
+            "description": "36min to 48min",
+            "value": 7
+          }
+        }
+      },
+      "TempTimer": {
+        "description": "Set TempTimer to configure the fault-timing for the following faults: Too-Cold-Charging (TooColdC), TooHot-Charging (TooHotC), Die-Hot (DieHot), and Too-Hot-Discharging (TooHotD). The TempTimer setting also controls the temperature transition delay. If the IC detects a change in temperature zone that results in the OVP level being reduced to a lower level due to the JEITA configuration. There is a delay equal to the TempTrans Configuration before the new lower OVP threshold goes into effect.",
+        "initial": 3,
+        "lsb": 2,
+        "msb": 3,
+        "name": "TempTimer",
+        "value": 3,
+        "values": {
+          "TempTimer_0": {
+            "description": "0 to 351ms",
+            "value": 0
+          },
+          "TempTimer_1": {
+            "description": "1.4s to 2.8s",
+            "value": 1
+          },
+          "TempTimer_2": {
+            "description": "2.8s to 5.625s",
+            "value": 2
+          },
+          "TempTimer_3": {
+            "description": "5.625s to 11.25s",
+            "value": 3
+          }
+        }
+      },
+      "UVPTimer": {
+        "description": "Set UVPTimer to configure the Undervoltage-Protection timer. ",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 1,
+        "name": "UVPTimer",
+        "value": 1,
+        "values": {
+          "UVPTimer_0": {
+            "description": "0 to 351ms",
+            "value": 0
+          },
+          "UVPTimer_1": {
+            "description": "2.8s to 5.625s",
+            "value": 1
+          },
+          "UVPTimer_2": {
+            "description": "5.625s to 11.25s",
+            "value": 2
+          },
+          "UVPTimer_3": {
+            "description": "11.25s to 22.5s",
+            "value": 3
+          }
+        }
+      },
+      "addr": 476,
+      "description": "Set nDelayCfg to configure debounce timers for various protection faults. A fault state is concluded only if the condition persists throughout the duration of the timer. All delay times start when the ADC first measures the value to exceed the protection threshold which could be up to an additional 351ms of delay between the time the fault is observed externally and the time the ADC first measures the fault.",
+      "initial": 43837,
+      "name": "nDelayCfg",
+      "size": 1,
+      "value": 43837
+    },
+    "nDesignCap": {
+      "addr": 435,
+      "description": "The nDesignCap register holds the expected capacity of the cell. This value is used to determine age and health of the cell by comparing against the measured present cell capacity.",
+      "initial": 0,
+      "name": "nDesignCap",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "nDesignVoltage": {
+      "Vdesign": {
+        "description": "'Design voltage' specification for the design. This value is used in SBS calculations only when enSBS = 1.",
+        "initial": 185,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Design voltage",
+        "step": 20.0,
+        "unit": "",
+        "value": 185
+      },
+      "Vminsys": {
+        "description": "'Minimum system voltage' specification for the design. Generates MinSysVoltage value. This value is used in SBS calculations only when enSBS = 1.",
+        "initial": 165,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Minimum system voltage",
+        "step": 20.0,
+        "unit": "",
+        "value": 165
+      },
+      "addr": 483,
+      "initial": 42425,
+      "name": "nDesignVoltage",
+      "size": 1,
+      "value": 42425
+    },
+    "nDeviceName0": {
+      "addr": 491,
+      "description": "A block SMBus/I2C read of 0x21 on the I2C slave 0x16 (SBS) reports RAM address 0x121 sequenced with 0x140 to 0x143, for a total of 5 words of data. The first byte indicates the byte length and the following bytes are ASCII characters representing the device name. This data is taken from nDeviceName in NVM, except that the byte count is set by firmware instead of saved in NVM.",
+      "initial": 0,
+      "name": "nDeviceName0",
+      "size": 1,
+      "value": 0
+    },
+    "nDeviceName1": {
+      "addr": 492,
+      "description": "A block SMBus/I2C read of 0x21 on the I2C slave 0x16 (SBS) reports RAM address 0x121 sequenced with 0x140 to 0x143, for a total of 5 words of data. The first byte indicates the byte length and the following bytes are ASCII characters representing the device name. This data is taken from nDeviceName in NVM, except that the byte count is set by firmware instead of saved in NVM.",
+      "initial": 0,
+      "name": "nDeviceName1",
+      "size": 1,
+      "value": 0
+    },
+    "nDeviceName2": {
+      "addr": 493,
+      "description": "A block SMBus/I2C read of 0x21 on the I2C slave 0x16 (SBS) reports RAM address 0x121 sequenced with 0x140 to 0x143, for a total of 5 words of data. The first byte indicates the byte length and the following bytes are ASCII characters representing the device name. This data is taken from nDeviceName in NVM, except that the byte count is set by firmware instead of saved in NVM.",
+      "initial": 0,
+      "name": "nDeviceName2",
+      "size": 1,
+      "value": 0
+    },
+    "nDeviceName3": {
+      "addr": 494,
+      "description": "A block SMBus/I2C read of 0x21 on the I2C slave 0x16 (SBS) reports RAM address 0x121 sequenced with 0x140 to 0x143, for a total of 5 words of data. The first byte indicates the byte length and the following bytes are ASCII characters representing the device name. This data is taken from nDeviceName in NVM, except that the byte count is set by firmware instead of saved in NVM.",
+      "initial": 0,
+      "name": "nDeviceName3",
+      "size": 1,
+      "value": 0
+    },
+    "nDeviceName4": {
+      "addr": 495,
+      "description": "A block SMBus/I2C read of 0x21 on the I2C slave 0x16 (SBS) reports RAM address 0x121 sequenced with 0x140 to 0x143, for a total of 5 words of data. The first byte indicates the byte length and the following bytes are ASCII characters representing the device name. This data is taken from nDeviceName in NVM, except that the byte count is set by firmware instead of saved in NVM.",
+      "initial": 0,
+      "name": "nDeviceName4",
+      "size": 1,
+      "value": 0
+    },
+    "nFaultLog_nFullCapFlt": {
+      "DieHot": {
+        "description": "Overtemperature for die temperature",
+        "initial": 0,
+        "name": "DieHot",
+        "position": 3,
+        "value": 0
+      },
+      "Imbalance": {
+        "description": "Multicell Imbalance",
+        "initial": 0,
+        "name": "Imbalance",
+        "position": 2,
+        "value": 0
+      },
+      "OCCp": {
+        "description": "Overcharge current protection",
+        "initial": 0,
+        "name": "OCCp",
+        "position": 4,
+        "value": 0
+      },
+      "ODCP": {
+        "description": "Overdischarge Current Protection",
+        "initial": 0,
+        "name": "ODCP",
+        "position": 0,
+        "value": 0
+      },
+      "OVP": {
+        "description": "Overvoltage protection",
+        "initial": 0,
+        "name": "OVP",
+        "position": 5,
+        "value": 0
+      },
+      "TooColdC": {
+        "description": "Undertemperature during charge",
+        "initial": 0,
+        "name": "TooColdC",
+        "position": 6,
+        "value": 0
+      },
+      "TooHotC": {
+        "description": "Overtemperature during charge",
+        "initial": 0,
+        "name": "TooHotC",
+        "position": 7,
+        "value": 0
+      },
+      "UVP": {
+        "description": "Undervoltage Protection",
+        "initial": 0,
+        "name": "UVP",
+        "position": 1,
+        "value": 0
+      },
+      "addr": 430,
+      "description": "This register has dual functionality depending on configuration settings. If nNVCfg2.enFL = 1, the nFaultLog register contains a history of protection events that have been logged at any moment by the device during the log interval. Alternatively, if nNVCfg0.enAF = 1, the register becomes repurposed for Age Forecasting data. If neither option is enabled, this register can be used as general-purpose user memory. This register is periodically saved to nonvolatile memory as part of the life-logging function.",
+      "initial": 0,
+      "name": "nFaultLog_nFullCapFlt",
+      "size": 1,
+      "value": 0
+    },
+    "nFilterCfg": {
+      "CURR": {
+        "description": "Sets the time constant for the AvgCurrent register. The default POR value of 0100b gives a time constant of 5.625s. The equation setting the period is: AvgCurrent time constant = 45s x 2(CURR-7)",
+        "initial": 4,
+        "lsb": 0,
+        "msb": 3,
+        "name": "CURR",
+        "value": 4
+      },
+      "MIX": {
+        "description": "Sets the time constant for the mixing algorithm. The default POR value of 1101b gives a time constant of 12.8 hours. The equation setting the period is: Mixing Period = 45s x 2^(MIX-3)",
+        "initial": 13,
+        "lsb": 7,
+        "msb": 10,
+        "name": "MIX",
+        "value": 13
+      },
+      "TEMP": {
+        "description": "Sets the time constant for the AvgTA register. The default POR value of 0001b gives a time constant of 1.5 minutes. The equation setting the period is: AvgTA time constant = 45s x 2^TEMP",
+        "initial": 1,
+        "lsb": 11,
+        "msb": 13,
+        "name": "TEMP",
+        "value": 1
+      },
+      "VOLT": {
+        "description": "Sets the time constant for the AvgVCell register. The default POR value of 010b gives a time constant of 45.0s. The equation setting the period is: AvgVCell time constant = 45s x 2^(VOLT-2)",
+        "initial": 2,
+        "lsb": 4,
+        "msb": 6,
+        "name": "VOLT",
+        "value": 2
+      },
+      "addr": 413,
+      "description": "The nFilterCfg register sets the averaging time period for all ADC readings, for mixing OCV results, and coulomb count results. It is recommended that these values are not changed unless absolutely required by the application.",
+      "initial": 3748,
+      "name": "nFilterCfg",
+      "size": 1,
+      "value": 3748,
+      "zeros_mask": 49152
+    },
+    "nFirstUsed": {
+      "addr": 487,
+      "initial": 0,
+      "name": "nFirstUsed",
+      "size": 1,
+      "value": 0
+    },
+    "nFullCapNom": {
+      "addr": 421,
+      "description": "This register holds the calculated full capacity of the cell, not including temperature and empty compensation. A new fullcapacity nominal value is calculated each time a cell relaxation event is detected. This register is used to calculate other outputs of the ModelGauge m5 algorithm.",
+      "initial": 0,
+      "name": "nFullCapNom",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "nFullCapRep": {
+      "addr": 425,
+      "description": "This register reports the full capacity that goes with RepCap, generally used for reporting to the user. A new full-capacity value is calculated at the end of every charge cycle in the application. ",
+      "initial": 0,
+      "name": "nFullCapRep",
+      "size": 1,
+      "unit": "",
+      "value": 0
+    },
+    "nFullSOCThr": {
+      "addr": 454,
+      "description": "The nFullSOCThr register gates detection of end-of-charge. VFSOC must be larger than the nFullSOCThr value before nIChgTerm is compared to the AvgCurrent register value. The recommended nFullSOCThr register setting for most custom characterized applications is 95% . For EZ performance applications, the recommendation is 80% (5005h). See the nIChgTerm register description and End-of-Charge Detection section for details.",
+      "initial": 0,
+      "nFullSOCThr": {
+        "initial": 0,
+        "lsb": 3,
+        "msb": 15,
+        "name": "nFullSOCThr",
+        "unit": "",
+        "value": 0
+      },
+      "name": "nFullSOCThr",
+      "ones_mask": 5,
+      "size": 1,
+      "value": 0,
+      "zeros_mask": 2
+    },
+    "nHibCfg": {
+      "EnHib": {
+        "description": "When set to 1, the IC enters hibernate mode if conditions are met. When set to 0, the IC always remains in active mode of operation.",
+        "initial": 0,
+        "name": "Enable Hibernate Mode",
+        "position": 15,
+        "value": 0
+      },
+      "HibEnterTime": {
+        "description": "Sets the time period that consecutive current readings must remain below the HibThreshold value before the IC enters hibernate mode as defined by the following equation. The default HibEnterTime value of 000b causes the IC to enter hibernate mode if all current readings are below the HibThreshold for a period of 5.625 seconds, but the IC could enter hibernate mode as quickly as 2.812 seconds. 2.812s x 2(HibEnterTime) < Hibernate Mode Entry Time < 2.812s x 2(HibEnterTime + 1)",
+        "initial": 0,
+        "lsb": 12,
+        "msb": 14,
+        "name": "HibEnterTime",
+        "value": 0
+      },
+      "HibExitTime": {
+        "description": "Sets the required time period of consecutive current readings above the HibThreshold value before the IC exits hibernate and returns to active mode of operation. Hibernate Mode Exit Time(s) = (HibExitTime + 1) x 702ms x 2(HibScalar)",
+        "initial": 1,
+        "lsb": 3,
+        "msb": 4,
+        "name": "HibExitTime",
+        "value": 1
+      },
+      "HibScalar": {
+        "description": "Sets the task period while in hibernate mode based on the following equation: Hibernate Mode Task Period(s) = 702ms x 2(HibScalar)",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 2,
+        "name": "HibScalar",
+        "value": 1
+      },
+      "HibThreshold": {
+        "description": "Sets the threshold level for entering or exiting hibernate mode. The threshold is calculated as a fraction of the full capacity of the cell using the following equation: Hibernate Mode Threshold(mA) = (FullCap(mAh)/0.8hr)/2(HibThreshold)",
+        "initial": 9,
+        "lsb": 8,
+        "msb": 11,
+        "name": "HibThreshold",
+        "value": 9
+      },
+      "addr": 443,
+      "description": "The nHibCfg register controls hibernate mode functionality. The IC enters hibernate mode, if the measured system current falls below the HibThreshold setting for longer than the HibEnterTime delay. While in hibernate mode the IC reduces its operating current by slowing down its task period as defined by the HibScalar setting. The IC automatically returns to active mode of operation if current readings go above the HibThreshold setting for longer than the HibExitTime delay.",
+      "initial": 2313,
+      "name": "nHibCfg",
+      "size": 1,
+      "value": 2313,
+      "zeros_mask": 224
+    },
+    "nIAlrtTh": {
+      "CURRMAX": {
+        "description": "An alert is generated if the current register reading exceeds this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the Current register.",
+        "initial": 127,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum Current Threshold",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 127
+      },
+      "CURRMIN": {
+        "description": "An alert is generated if the current register reading falls below this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the Current register.",
+        "initial": 128,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum Current Threshold",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 128
+      },
+      "addr": 398,
+      "description": "The nIAlrtTh register shown in Table 89 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by the Current register value. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 400μV resolution over the full operating range of the Current register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 32640,
+      "name": "nIAlrtTh",
+      "size": 1,
+      "value": 32640
+    },
+    "nIChgTerm": {
+      "addr": 412,
+      "description": "The nIChgTerm register allows the device to detect when a charge cycle of the cell has completed. nIChgTerm should be programmed to the exact charge termination current used in the application. The device detects end-of-charge if all the following conditions are met: \n- VFSOC Register > FullSOCThr Register\n- AND IChgTerm x 0.125 < Current Register < IChgTerm x 1.25\n- AND IChgTerm x 0.125 < AvgCurrent Register < IChgTerm x 1.25\nSee the End-of-Charge Detection section for more details. \n",
+      "initial": 0,
+      "name": "nIChgTerm",
+      "size": 1,
+      "step": 1.5625,
+      "unit": "",
+      "value": 0
+    },
+    "nIPrtTh1": {
+      "OCCP": {
+        "description": "Overcharge current-protection occurs when the current register reading exceeds this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the current register. HotCOEF, WarmCOEF, and ColdCOEF re-scales nIPrtTh1.OCCP in hot, warm, and cold zone.\nFor example, in warm zone, overcharge current-protection threshold updates to OCCP x WarmCOEF.\nSee the nJEITAC register for HotCOEF, WarmCOEF, and ColdCOEF definitions and the nTPrtTh2 and nTPrtTh3\nregisters for temperature zone definitions.",
+        "initial": 75,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Overcharge Current-Protection Threshold at Room Temperature",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 75
+      },
+      "ODCP": {
+        "description": "Overdischarge current-protection occurs when current register reading exceeds this value. This field is signed 2's complement with 400μV LSb resolution to match the upper byte of the current register.\nThe fault delay for OCCP and ODCP is configured in nDelayCfg.OverCurrTimer.",
+        "initial": 181,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Overdischarge Current-Protection Threshold",
+        "signed": true,
+        "step": 400.0,
+        "unit": "",
+        "value": 181
+      },
+      "addr": 467,
+      "description": "sets upper and lower limits for overcurrent protection when current exceeds the configuration threshold. The upper 8-bits set the overcharge current-protection threshold and the lower 8-bits set the overdischarge current-protection threshold. Protection threshold limits are configurable with 400μV resolution over the full operating range of the current register.",
+      "initial": 19381,
+      "name": "nIPrtTh1",
+      "size": 1,
+      "value": 19381
+    },
+    "nJEITAC": {
+      "ColdCOEF": {
+        "description": "Coefficient 12.5% to 100% relative to ChargingCurrent for controlling the charge current at cold. ColdCOEF has a 12.5% LSB resolution. The resulting ColdChargingCurrent is controlled by the following equation: ColdChargingCurrent = RoomChargingCurrent x (ColdCOEF+1)/8",
+        "initial": 1,
+        "lsb": 3,
+        "msb": 5,
+        "name": "ColdCOEF",
+        "step": 12.5,
+        "unit": "",
+        "value": 1,
+        "zero_code_value": 12.5
+      },
+      "HotCOEF": {
+        "description": "Coefficient 12.5% to 100% relative to ChargingCurrent for controlling the charge current at hot. HotCOEF has a 12.5% LSB resolution. The resulting HotChargingCurrent is controlled by the following equation: HotChargingCurrent = RoomChargingCurrent x (HotCOEF+1)/8",
+        "initial": 3,
+        "lsb": 0,
+        "msb": 2,
+        "name": "HotCOEF",
+        "step": 12.5,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 12.5
+      },
+      "RoomChargingCurrent": {
+        "description": "Sets the nominal room-temperature charging current. The LSB is 200μV. This value is unsigned with a range of 00h (0mV) to FFh (51.2mV).",
+        "initial": 100,
+        "lsb": 8,
+        "msb": 15,
+        "name": "RoomChargingCurrent",
+        "step": 200.0,
+        "unit": "",
+        "value": 100
+      },
+      "WarmCOEF": {
+        "description": "Coefficient 62.5% to 100% relative to ChargingCurrent for controlling the charge current at warm. WarmCOEF has a 12.5% LSB resolution. The resulting WarmChargingCurrent is controlled by the following equation: WarmChargingCurrent = RoomChargingCurrent x (WarmCOEF+5)/8",
+        "initial": 1,
+        "lsb": 6,
+        "msb": 7,
+        "name": "WarmCOEF",
+        "step": 12.5,
+        "unit": "",
+        "value": 1,
+        "zero_code_value": 62.5
+      },
+      "addr": 472,
+      "description": "Sets the nominal room temperature charging current and the coefficients to scale the charging current across the temperature zones shown in Figure 3. The WarmCOEF, ColdCOEF, and HotCOEF coefficients impact the charging current as well as OCCP and ODCP (See nIPrtTh1). To disable the temperature dependence and create a flat charging current across the temperature range, set the lower byte of nJEITAC to a value of FFh.",
+      "initial": 25675,
+      "name": "nJEITAC",
+      "size": 1,
+      "value": 25675
+    },
+    "nJEITAV": {
+      "RoomChargeV": {
+        "description": "RoomChargeV defines the charge voltage between temperatures T2 \"Cold\" and T3 \"Warm\", relative to a standard 4.2V setting, providing a range of 3.56V to 4.835V in 5mV steps. RoomChargeV is a signed configuration. Set to 00h to configure for standard 4.2V.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "RoomChargeV",
+        "signed": true,
+        "step": 5.0,
+        "unit": "",
+        "value": 0,
+        "zero_code_value": 4200.0
+      },
+      "addr": 473,
+      "dColdChargeV": {
+        "description": "ColdChargeV defines the delta charge voltage (relative to RoomChargeV) between temperatures T1 and T2, relative to the room setting, providing a range of RoomChargeV to (RoomChargeV-140mV) in -20mV steps. dColdChargeV configuration is unsigned.",
+        "initial": 3,
+        "lsb": 3,
+        "msb": 5,
+        "name": "dColdChargeV",
+        "step": -20.0,
+        "unit": "",
+        "value": 3
+      },
+      "dHotChargeV": {
+        "description": "HotChargeV defines the delta charge voltage (relative to WarmChargeV) between temperatures T3 and T4, relative to the room setting, providing a range of WarmChargeV to (WarmChargeV-140mV) in -20mV steps. dHotChargeV configuration is unsigned.",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 2,
+        "name": "dHotChargeV",
+        "step": -20.0,
+        "unit": "",
+        "value": 1
+      },
+      "dWarmChargeV": {
+        "description": "WarmChargeV defines the delta charge voltage (relative to RoomChargeV) between temperatures TWarm and T3, relative to the room setting, providing a range of RoomChargeV to (RoomChargeV-60mV) in -20mV steps. dWarmChargeV configuration is unsigned.",
+        "initial": 1,
+        "lsb": 6,
+        "msb": 7,
+        "name": "dWarmChargeV",
+        "step": -20.0,
+        "unit": "",
+        "value": 1
+      },
+      "description": "Sets the JEITA Charge Voltage configuration for the IC. The JEITA charge voltage can be read from a charger to set the appropriate charge voltage based on the temperature. Also, this value is used to determine the overvoltage-protection threshold. Each charge voltage register is an offset with a 5 or 20mV resolution. The RoomChargeV offset is defined relative to a normal standard charge setting of 4.2V. The additional charge voltages are relative to RoomChargeV based on the temperature. To disable the temperature dependence and create a flat charging voltage across the temperature range, set dWarmChargeV, dColdChargeV, and dHotChargeV to a value of 00b.",
+      "initial": 89,
+      "name": "nJEITAV",
+      "size": 1,
+      "value": 89
+    },
+    "nLearnCfg": {
+      "LS": {
+        "description": "The Learn Stage value controls the influence of the voltage fuel gauge on the mixing algorithm. Learn Stage defaults to 0h, making the voltage fuel gauge dominate. Learn Stage then advances to 7h over the course of two full cell cycles to make the coulomb counter dominate. Host software can write the Learn Stage value to 7h to advance to the final stage at any time. Writing any value between 1h and 6h is ignored.",
+        "initial": 0,
+        "lsb": 4,
+        "msb": 6,
+        "name": "Learn Stage",
+        "value": 0
+      },
+      "addr": 415,
+      "description": "The nLearnCfg register controls all functions relating to adaptation during operation.",
+      "initial": 18054,
+      "name": "nLearnCfg",
+      "ones_mask": 18054,
+      "size": 1,
+      "value": 18054,
+      "zeros_mask": 47369
+    },
+    "nManfctrDate": {
+      "Day": {
+        "initial": 0,
+        "lsb": 0,
+        "msb": 4,
+        "name": "Day",
+        "value": 0
+      },
+      "Month": {
+        "initial": 0,
+        "lsb": 5,
+        "msb": 8,
+        "name": "Month",
+        "value": 0
+      },
+      "Year": {
+        "initial": 0,
+        "lsb": 9,
+        "msb": 15,
+        "name": "Year",
+        "value": 0,
+        "zero_code_value": 1980.0
+      },
+      "addr": 486,
+      "description": "Manufacture Date in SBS V1.1 format.",
+      "initial": 0,
+      "name": "Manufacture Date",
+      "size": 1,
+      "value": 0
+    },
+    "nManfctrName0": {
+      "addr": 460,
+      "description": "First two characters of the manufacturer name",
+      "initial": 0,
+      "name": "nManfctrName0",
+      "size": 1,
+      "value": 0
+    },
+    "nManfctrName1": {
+      "addr": 461,
+      "description": "3rd and 4th character of the manufacturer name",
+      "initial": 0,
+      "name": "nManfctrName1",
+      "size": 1,
+      "value": 0
+    },
+    "nManfctrName2": {
+      "addr": 462,
+      "description": "5th and 6th character of the manufacturer name",
+      "initial": 0,
+      "name": "nManfctrName2",
+      "size": 1,
+      "value": 0
+    },
+    "nMaxMinCurr": {
+      "MaxCurrent": {
+        "initial": 128,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxCurrent",
+        "signed": true,
+        "step": 0.04,
+        "unit": "",
+        "value": 128
+      },
+      "MinCurrent": {
+        "initial": 127,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinCurrent",
+        "signed": true,
+        "step": 0.04,
+        "unit": "",
+        "value": 127
+      },
+      "addr": 427,
+      "backup": "Periodically saves to nMaxMinCurr (1ABh) if nNVCfg2.enMMC is set, but does not restore from nonvolatile memory.",
+      "description": "The MaxMinCurr register maintains the maximum and minimum Current register values since the last IC reset or until cleared by host software. Each time the Current register updates, it is compared against these values. If the reading is larger than the maximum or less than the minimum, the corresponding value is replaced with the new reading. At powerup, the maximum current value is set to 80h (the minimum) and the minimum current value is set to 7Fh (the maximum). Therefore, both values are changed to the Current register reading after the first update. Host software can reset this register by writing it to its power-up value of 0x807F. The maximum and minimum voltages are each stored as two’s complement 8-bit values with 0.4mV/RSENSE resolution. Table 54 shows the register format. MaxMinCurr is not cumulative across the entire battery lifetime. After each periodic nonvolatile-memory save, MaxMinCurr resets to 0x807F to find the next maximum and minimum current across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum current experienced across only that segment.",
+      "initial": 32895,
+      "name": "nMaxMinCurr",
+      "size": 1,
+      "value": 32895
+    },
+    "nMaxMinTemp": {
+      "MaxTemperature": {
+        "description": "Maximum Temp register reading (1ºC resolution) ",
+        "initial": 8,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxTemperature",
+        "signed": true,
+        "unit": "",
+        "value": 8
+      },
+      "MinTemperature": {
+        "description": "Minimum Temp register reading (1ºC resolution) ",
+        "initial": 7,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinTemperature",
+        "signed": true,
+        "unit": "",
+        "value": 7
+      },
+      "addr": 429,
+      "backup": "Periodically saves to nMaxMinTemp (1ADh) if nNVCfg2.enMMT is set, but does not restore from nonvolatile memory.",
+      "description": "The MaxMinTemp register maintains the maximum and minimum Temp register (01Bh) values since the last fuel-gauge reset or until cleared by host software. Each time the Temp register updates, it is compared against these values. If the reading is larger than the maximum or less than the minimum, the corresponding values are replaced with the new reading. At power-up, the maximum value is set to 80h (minimum) and the minimum value is set to 7Fh (maximum). Therefore, both values are changed to the Temp register reading after the first update. Host software can reset this register by writing it to its power-up value of 807Fh. The maximum and minimum temperatures are each stored as two’s complement 8-bit values with 1°C resolution. MaxMinTemp is not cumulative across the entire battery lifetime. After each periodic nonvolatile memory save, MaxMinTemp resets to 807Fh to find the next maximum and minimum temperatures across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum temperature experienced across only that segment.",
+      "initial": 2055,
+      "name": "nMaxMinTemp",
+      "size": 1,
+      "value": 2055
+    },
+    "nMaxMinVolt": {
+      "MaxVCELL": {
+        "description": "Maximum channel voltage reading (20mV resolution)",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "MaxVCELL",
+        "step": 0.02,
+        "unit": "",
+        "value": 0
+      },
+      "MinVCELL": {
+        "description": "Minimum channel voltage reading (20mV resolution)",
+        "initial": 255,
+        "lsb": 0,
+        "msb": 7,
+        "name": "MinVCELL",
+        "step": 0.02,
+        "unit": "",
+        "value": 255
+      },
+      "addr": 428,
+      "backup": "Saves to nMaxMinVolt (1ACh) if nNVCfg2.enMMV is set (does not restore from nonvolatile).",
+      "description": "The MaxMinVolt register maintains the maximum and minimum of all cell voltage readings since device reset. Each time the voltage registers update, they are compared against these values. If a new voltage channel reading is larger than the maximum or less than the minimum, the corresponding value is replaced with the new reading. At power-up, the maximum voltage value is set to 00h (the minimum) and the minimum voltage value is set to FFh (the maximum). Therefore, both values are updated after the first update. Host software can reset this register by writing it to its power-up value of 0x00FF. The maximum and minimum voltages are each stored as 8-bit values with a 20mV resolution. MaxMinVolt is not cumulative across the entire battery lifetime. After each periodic nonvolatile-memory save, MaxMinVolt resets to 0x00FF to find the next max/min volt across the next segment of battery life. This behavior helps provide a useful log across the battery lifetime where each log segment shows the maximum and minimum voltage experienced across only that segment.",
+      "initial": 255,
+      "name": "nMaxMinVolt",
+      "size": 1,
+      "value": 255
+    },
+    "nMiscCfg": {
+      "FUS": {
+        "description": "This field prevents jumps in the RepSOC and FullCapRep registers by setting the rate of adjustment of FullCapRep near the end of a charge cycle. The update slope adjustment range is from 2% per 15 minutes (0000b) to a maximum of 32% per 15 minutes (1111b)",
+        "initial": 3,
+        "lsb": 12,
+        "msb": 15,
+        "name": "Full Update Slope",
+        "step": 2.0,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 2.0
+      },
+      "MR": {
+        "description": "This value sets the strength of the servo mixing rate after the final mixing state has been reached (> 2.08 complete cycles). The units are MR0 = 6.25μV, giving a range up to 19.375mA with a standard 0.010Ω sense resistor. Setting this value to 00000b disables servo mixing and the IC continues with time-constant mixing indefinitely. The default setting is 18.75μV or 1.875mA with a standard sense resistor.",
+        "initial": 3,
+        "lsb": 5,
+        "msb": 9,
+        "name": "Mixing Rate",
+        "step": 6.25,
+        "unit": "",
+        "value": 3
+      },
+      "SACFG": {
+        "description": "SOC Alerts can be generated by monitoring any of the SOC registers as follows. SACFG defaults to 00 at power-up.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 1,
+        "name": "SOC Alert Config",
+        "value": 0,
+        "values": {
+          "SACFG_0": {
+            "description": "SOC Alerts are generated based on the RepSOC register.",
+            "value": 0
+          },
+          "SACFG_1": {
+            "description": "SOC Alerts are generated based on the AvSOC register.",
+            "value": 1
+          },
+          "SACFG_2": {
+            "description": "SOC Alerts are generated based on the MixSOC register.",
+            "value": 2
+          },
+          "SACFG_3": {
+            "description": "SOC Alerts are generated based on the VFSOC register.",
+            "value": 3
+          }
+        }
+      },
+      "addr": 434,
+      "description": "The nMiscCfg control register enables various other functions of the device. The nMiscCfg register default values should not be changed unless specifically required by the application. Table 75 shows the register format.",
+      "initial": 12400,
+      "name": "nMiscCfg",
+      "ones_mask": 16,
+      "size": 1,
+      "value": 12400,
+      "zeros_mask": 3084
+    },
+    "nNVCfg0": {
+      "SBSen2": {
+        "description": "This bit enables SBS functions of the IC with DevName 420Ah or newer. See the SBS section. When set, all registers accessed with the SBS 2-Wire address are regularly updated. When this bit and SBSen are clear, all SBS related nonvolatile configuration register locations can be used as general-purpose user memory. In addition, setting SBSen2 = 1 enables the bus timeout hardware required for proper SMBus support. If SBS2en = 1, set enSBS = 0.",
+        "initial": 0,
+        "name": "Enable SBS on DevName 420Ah or newer",
+        "position": 1,
+        "value": 0
+      },
+      "addr": 440,
+      "description": "The nNVCfg0 register manages nonvolatile memory backup of device and fuel gauge register RAM locations. Each bit of the nNVCfg0 register, when set, enables a given register location to be restored from a corresponding nonvolatile memory location after reset of the IC. If nonvolatile restore of a given register is not enabled, that location initializes to a default value after reset instead. See the individual register descriptions for details.",
+      "enAF": {
+        "description": "Set this bit to enable Age Forecasting functionality. When this bit is clear, nAgeFcCfg can be used for general-purpose data storage. When set, nVoltTemp becomes repurposed for Age Forecasting data. When enAF is set to 1, nNVCfg2.enVT and nNVCfg2.enFL must be 0 for proper operation.",
+        "initial": 0,
+        "name": "Enable Age Forecasting",
+        "position": 2,
+        "value": 0
+      },
+      "enDC": {
+        "description": "Set this bit to enable DesignCap register to be restored after reset by the nDesignCap register. When this bit is clear, DesignCap restores with its alternate initialization value and nDesignCap can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable DesignCap restore",
+        "position": 4,
+        "value": 0
+      },
+      "enDP": {
+        "description": "Set this bit to enable Dynamic Power calculations. When this bit is set to 0, Dynamic Power calculations are disabled and registers MaxPeakPower/SusPeakPower/MPPCurrent/SPPCurrent can be used as general-purpose memory.",
+        "initial": 0,
+        "name": "Enable Dynamic Power",
+        "position": 6,
+        "value": 0
+      },
+      "enFCfg": {
+        "description": "Set this bit to enable the FilterCfg register to be restored after reset by the nFilterCfg register. When this bit is clear, FilterCfg restores with its alternate initialization value and nFilterCfg can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable FilterCfg restore",
+        "position": 10,
+        "value": 0
+      },
+      "enICT": {
+        "description": "Set this bit to enable IChgTerm register to be restored after reset by the nIChgTerm register. When this bit is clear, IChgTerm restores to a value of 1/3 C-rate (from FullCapNom) and nIChgTerm can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable IChgTerm restore",
+        "position": 7,
+        "value": 0
+      },
+      "enLCfg": {
+        "description": "Set this bit to enable LearnCfg register to be restored after reset by the nLearnCfg register. When this bit is clear, LearnCfg restores with its alternate initialization value and nLearnCfg can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable LearnCfg restore",
+        "position": 8,
+        "value": 0
+      },
+      "enMC": {
+        "description": "Set this bit to enable MiscCfg register to be restored after reset by the nMiscCfg register. When this bit is clear, MiscCfg restores with its alternate initialization value and nMiscCfg can be used for generalpurpose data storage.",
+        "initial": 0,
+        "name": "Enable MiscCfg restore",
+        "position": 3,
+        "value": 0
+      },
+      "enOCV": {
+        "description": "Set this bit to enable nOCVTable register locations to be used for cell characterization data. When this bit is clear, the IC uses the default cell model and all nOCVTable register locations can be used as general-purpose user memory.",
+        "initial": 0,
+        "name": "Enable OCVTable restore",
+        "position": 15,
+        "value": 0
+      },
+      "enRCfg": {
+        "description": "Set this bit to enable RelaxCfg register to be restored after reset by the nRelaxCfg register. When this bit is clear, RelaxCfg restores with its alternate initialization value and nRelaxCfg can be used for general-purpose data storage.",
+        "initial": 1,
+        "name": "Enable RelaxCfg restore",
+        "position": 9,
+        "value": 1
+      },
+      "enSBS": {
+        "description": "This bit enables SBS functions of the IC with DevName 4209h. See the SBS section. When set, all registers accessed with the SBS 2-Wire address are regularly updated. When this bit and SBSen2 are clear, all SBS related nonvolatile configuration register locations can be used as general-purpose user memory. In addition, setting enSBS = 1 enables the bus timeout hardware required for proper SMBus support. If enSBS = 1, set SBSen2 = 0.",
+        "initial": 0,
+        "name": "Enable SBS on DevName 4209h",
+        "position": 0,
+        "value": 0
+      },
+      "enSHA": {
+        "description": "Set to 1 to configure the MTP at address 0x1DC to 0x1DF as SHA space. Set to 0 to configure address 0x1DC to 0x1DF as user MTP.",
+        "initial": 0,
+        "name": "enSHA",
+        "position": 13,
+        "value": 0
+      },
+      "enVE": {
+        "description": "Set this bit to enable VEmpty register to be restored after reset by the nVEmpty register. When this bit is clear, VEmpty restores with its alternate initialization value (3.0V) and nVEmpty can be used for generalpurpose data storage.",
+        "initial": 0,
+        "name": "Enable VEmpty restore",
+        "position": 5,
+        "value": 0
+      },
+      "enX": {
+        "description": "Set this bit to enable nXTable register locations to be used for cell characterization data. When this bit is clear, the IC uses the default cell model and all nXTable register locations can be used as generalpurpose user memory.",
+        "initial": 0,
+        "name": "nable XTable restore",
+        "position": 14,
+        "value": 0
+      },
+      "initial": 2560,
+      "name": "nNVCfg0",
+      "ones_mask": 2048,
+      "size": 1,
+      "value": 2560,
+      "zeros_mask": 4096
+    },
+    "nNVCfg1": {
+      "addr": 441,
+      "description": "The nNVCfg1 register manages nonvolatile memory restore of device and fuel gauge register RAM locations. Each bit of the nNVCfg1 register, when set, enables a given register location to be restored from a corresponding nonvolatile memory location after reset of the IC. If nonvolatile backup of a given register is not enabled, that location initializes to a default value after reset instead. See the individual register descriptions for details.",
+      "enAT": {
+        "description": "Set this bit to enable IAlrtTh, VAlrtTh, TAlrtTh, and SAlrtTh registers to be restored after reset by the nIAlrtTh, nVAlrtTh, nTAlrtTh, and nSAlrtTh registers respectively. When this bit is clear these registers restore with their alternate initialization values and the nonvolatile locations can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable Alert Thresholds",
+        "position": 3,
+        "value": 0
+      },
+      "enCTE": {
+        "description": "Set this bit to enable the nConvgCfg register settings to affect the converge to empty functionality of the IC. When this bit is clear, converge-to-empty is disabled and nConvgCfg can be used for generalpurpose data storage.",
+        "initial": 1,
+        "name": "Enable Converge-to-Empty",
+        "position": 1,
+        "value": 1
+      },
+      "enFTh": {
+        "description": "Set this bit to enable FullSOCThr register to be restored after reset by the nFullSOCThr register. When this bit is clear FullSOCThr restores with its alternate initialization value (80%) and nFullSOCThr can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable FullSOCThr configuration restore",
+        "position": 13,
+        "value": 0
+      },
+      "enJ": {
+        "description": "Set this bit to 1 to enable ChargingCurrent and ChargingVoltage update feature.",
+        "initial": 1,
+        "name": "Enable ChargingCurrent and ChargingVoltage",
+        "position": 7,
+        "value": 1
+      },
+      "enJP": {
+        "description": "Set this bit to 1 to enable JEITA Protection. Clear this bit to disable JEITA protection and make OVP and OCCP thresholds become flat.",
+        "initial": 0,
+        "name": "Enable Protection with JEITA (temperature region dependent)",
+        "position": 10,
+        "value": 0
+      },
+      "enMtl": {
+        "description": "Set this bit to enable CGTempCo register to be restored after reset by the nTCurve register. When this bit is clear CGTempCo restores with its alternate initialization value (copper). nTCurve can be used for general-purpose data storage if enMtl is clear.",
+        "initial": 0,
+        "name": "Enable CGTempCo restore",
+        "position": 14,
+        "value": 0
+      },
+      "enProt": {
+        "description": "Set this bit to enable the protector. When this bit is clear, protector is disabled.",
+        "initial": 1,
+        "name": "Enable Protector",
+        "position": 8,
+        "value": 1
+      },
+      "enProtChksm": {
+        "description": "Enable protector checksum function.",
+        "initial": 0,
+        "name": "Enable ChargingCurrent and ChargingVoltage",
+        "position": 6,
+        "value": 0
+      },
+      "enSC": {
+        "description": "Set this bit to 1 if a special chemistry model is used. This bit enables the use of nScOcvLim.",
+        "initial": 0,
+        "name": "Enable special chemistry model",
+        "position": 9,
+        "value": 0
+      },
+      "enTTF": {
+        "description": "Set to 1 to enable nTTFCfg (configures CVMixCap and CVHalftime) for tuning of Time-To-Full performance. Otherwise, CVMixCap and CVHalftime restore to their alternate initialization values and nTTFCfg can be used for general-purpose data storage.",
+        "initial": 0,
+        "name": "Enable time-to-full configuration",
+        "position": 4,
+        "value": 0
+      },
+      "initial": 386,
+      "name": "nNVCfg1",
+      "size": 1,
+      "value": 386,
+      "zeros_mask": 38949
+    },
+    "nNVCfg2": {
+      "FibMax": {
+        "description": "Set the FibMax and FibScl \"Fibonacci Saving\" interval to provide recurring log-saving according to the expected battery lifespan. See the 100 Record Life Logging section for more details.",
+        "initial": 3,
+        "lsb": 2,
+        "msb": 4,
+        "name": "FibMax",
+        "value": 3
+      },
+      "FibScl": {
+        "description": "Set the FibMax and FibScl \"Fibonacci Saving\" interval to provide recurring log-saving according to the expected battery lifespan. See the 100 Record Life Logging section for more details.",
+        "initial": 1,
+        "lsb": 0,
+        "msb": 1,
+        "name": "FibScl",
+        "value": 1
+      },
+      "addr": 442,
+      "description": "The nNVCfg2 register manages nonvolatile memory backup and restore of device and fuel gauge register RAM locations. Each bit of the nNVCfg2 register, when set, enables a given register location to be restored from or backed up to a corresponding nonvolatile memory location after reset of the IC. If nonvolatile backup of a given register is not enabled, that location initializes to a default value after reset instead. See the individual register descriptions for details.",
+      "enFC": {
+        "description": "Set this bit to enable FullCap and FullCapRep registers to be restored after reset by the nFullCapRep register and FullCapRep to backup to nFullCapRep. When this bit is clear FullCap and FullCapRep registers restore from the nFullCapNom register. nFullCapRep can then be used as generalpurpose user memory.",
+        "initial": 1,
+        "name": "Enable FullCap and FullCapRep backup and restore",
+        "position": 9,
+        "value": 1
+      },
+      "enFL": {
+        "description": "Set EnFL to store protector faults into nFaultLog.LowByte as shown in Table 48. EnFL is not compatible with Age Forecasting. nFaultLog can be used as general-purpose memory if not used for fault logging or age forecasting.",
+        "initial": 1,
+        "name": "Enable Fault Logging",
+        "position": 5,
+        "value": 1
+      },
+      "enMMC": {
+        "description": "Set this bit to enable storage of MaxMinCurr register information into the nMaxMinCurr register during save operations. When this bit is clear nMaxMinCurr can be used as general-purpose memory.",
+        "initial": 1,
+        "name": "Enable MaxMinCurr backup",
+        "position": 11,
+        "value": 1
+      },
+      "enMMT": {
+        "description": "Set this bit to enable storage of MaxMinTemp register information into the nMaxMinTemp register during save operations. EnMMT is incompatible with nNVCFG2.enFL. When enMMT and enFL bits are clear, nMaxMinTemp can be used as general-purpose memory.",
+        "initial": 1,
+        "name": "Enable MaxMinTemp backup",
+        "position": 13,
+        "value": 1
+      },
+      "enMMV": {
+        "description": "Set this bit to enable storage of MaxMinVolt register information into the nMaxMinVolt register during save operations. When this bit is clear nMaxMinVolt can be used as general-purpose memory.",
+        "initial": 1,
+        "name": "Enable MaxMinVolt backup",
+        "position": 12,
+        "value": 1
+      },
+      "enMet": {
+        "description": "Setting this bit to 1 enables temperature compensation of current readings for allowing copper trace current sensing. See also nNVCfg1.enMtl, which enables nTCurve register operation for adjustment of the current sensing temperature coefficient.",
+        "initial": 0,
+        "name": "Enable metal current sensing",
+        "position": 7,
+        "value": 0
+      },
+      "enT": {
+        "description": "Set this bit to enable TimerH register to be backed up and restored by the nTimerH register. When this bit is clear TimerH restores with its alternate initialization value and nTimerH can be used as general-purpose memory.",
+        "initial": 1,
+        "name": "Enable TimerH backup and restore",
+        "position": 15,
+        "value": 1
+      },
+      "enVT": {
+        "description": "Set this bit to enable storage of AvgVCell and AvgTA register information into the nVoltTemp register during save operations. When this bit and nNVCfg0.enAF are clear nVoltTemp can be used as general-purpose memory. Note that enVT should not be set simultaneously with nNVCfg0.enAF (AgeForecasting) and nNVCfg2.enFL (Fault Logging).",
+        "initial": 1,
+        "name": "Enable Voltage and Temperature backup",
+        "position": 10,
+        "value": 1
+      },
+      "initial": 48685,
+      "name": "nNVCfg2",
+      "size": 1,
+      "value": 48685,
+      "zeros_mask": 16704
+    },
+    "nOCVTable0": {
+      "addr": 400,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable0",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable1": {
+      "addr": 401,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable1",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable10": {
+      "addr": 410,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable10",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable11": {
+      "addr": 411,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable11",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable2": {
+      "addr": 402,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable2",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable3": {
+      "addr": 403,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable3",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable4": {
+      "addr": 404,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable4",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable5": {
+      "addr": 405,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable5",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable6": {
+      "addr": 406,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable6",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable7": {
+      "addr": 407,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable7",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable8": {
+      "addr": 408,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable8",
+      "size": 1,
+      "value": 0
+    },
+    "nOCVTable9": {
+      "addr": 409,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nOCVTable9",
+      "size": 1,
+      "value": 0
+    },
+    "nODSCCfg": {
+      "OCDlY": {
+        "description": "Configure from 1h to Fh to set overdischarge/overcharge detection debouncing delay between 70μs and 14.66ms (70μs + 977μs x OCDLY).",
+        "initial": 5,
+        "lsb": 0,
+        "msb": 3,
+        "name": "Overdischarge and Overcharge Current Delay",
+        "step": 977.0,
+        "unit": "",
+        "value": 5,
+        "zero_code_value": 70.0
+      },
+      "SCDlY": {
+        "description": "Configure from 0h to Fh to set short circuit detection debouncing delay between 70μs and 985μs (70μs + 61μs x SCDLY). There may be up to 31μs of additional delay before the short-circuit's alert affects the discharge FET.",
+        "initial": 3,
+        "lsb": 8,
+        "msb": 11,
+        "name": "Short-Circuit Delay",
+        "step": 61.0,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 70.0
+      },
+      "addr": 478,
+      "initial": 17237,
+      "name": "nODSCCfg",
+      "ones_mask": 16464,
+      "size": 1,
+      "value": 17237,
+      "x_mask": 45216
+    },
+    "nODSCTh": {
+      "OCTH": {
+        "description": "Sets the overcharge threshold to a value between 0mV and 38.75mV with a step size of 1.25mV. The OCTH bits are stored such that 1Fh = 0mV and 00h = 38.75mV. Overcharge threshold is calculated as 38.75mV - (OCTH x 1.25mV)).",
+        "initial": 3,
+        "lsb": 10,
+        "msb": 14,
+        "name": "Overcharge Threshold Setting",
+        "step": -1.25,
+        "unit": "",
+        "value": 3,
+        "zero_code_value": 38.75
+      },
+      "ODTH": {
+        "description": "Sets the overdischarge threshold to a value between 0mV and -77.5mV with a step size of -2.5mV. The ODTH bits are stored such that 1Fh = 0mV and 00h = -77.5mV. Overdischarge threshold is calculated as -77.5mV + (ODTH x 2.5mV)).",
+        "initial": 15,
+        "lsb": 0,
+        "msb": 4,
+        "name": "Overdischarge Threshold Setting",
+        "step": 2.5,
+        "unit": "",
+        "value": 15,
+        "zero_code_value": -77.5
+      },
+      "SCTH": {
+        "description": "Sets the short-circuit threshold to a value between 0mV and -155mV with a step size of -5mV. The SCTH bits are stored such that 1Fh = 0mV and 00h = -155mV. Short-circuit threshold is calculated as -155mV + (SCTH x 5mV)).",
+        "initial": 21,
+        "lsb": 5,
+        "msb": 9,
+        "name": "Short-Circuit Threshold Setting",
+        "step": 5.0,
+        "unit": "",
+        "value": 21,
+        "zero_code_value": -155.0
+      },
+      "addr": 477,
+      "description": "The nODSCTh register sets the current thresholds for each overcurrent alert.",
+      "initial": 3759,
+      "name": "nODSCTh",
+      "size": 1,
+      "value": 3759,
+      "x_mask": 32768
+    },
+    "nOVPrtTh": {
+      "ChgDetTh": {
+        "description": "The IC determines that a charger is connected when PCKP > (BATT + ChgDetTh). ChgDetTh has a range of 10mV to 80mV with a 10mV lsb.",
+        "initial": 7,
+        "lsb": 8,
+        "msb": 10,
+        "name": "Charger Detection Threshold",
+        "step": 10.0,
+        "unit": "",
+        "value": 7,
+        "zero_code_value": 10.0
+      },
+      "OVPPermFail": {
+        "description": "Permanent failure overvoltage protection occurs when any cell voltage register reading exceeds this value. The OVPPermFail range is OVP_thresholdRoom + 40mV to OVP_thresholdRoom + 340mV with a 20 mV lsb. OVP_PermFail_Threshold = OVPRoom + 40mV + (OVPPermFail x 20mV)",
+        "initial": 11,
+        "lsb": 12,
+        "msb": 15,
+        "name": "Permanent Failure OVP (permanent overvoltage protection) Threshold",
+        "step": 20.0,
+        "unit": "",
+        "value": 11,
+        "zero_code_value": 40.0
+      },
+      "addr": 474,
+      "dOVP": {
+        "description": "dOVP sets JEITA overvoltage protection relative to ChargeVoltage (see nJEITAV). If nNVCfg1.enJP is disabled, then OVP voltage is calculated from RoomChargeV across all temperature zones. This is a positive number with 10mV resolution and 150mV range. Overvoltage protection is calculated as: OVP = ChargeVoltage + dOVP x 10mV",
+        "initial": 5,
+        "lsb": 4,
+        "msb": 7,
+        "name": "Delta from ChargeVoltage to Overvoltage Protection",
+        "step": 10.0,
+        "unit": "",
+        "value": 5
+      },
+      "dOVPR": {
+        "description": "dOVPR sets overvoltage-protection release relative to the overvoltage-protection setting. This is a positive number with 10mV resolution and is translated to a negative offset relative to OVP. Overvoltage-protection release is calculated as: OVPR = OVP - dOVPR x 10mV",
+        "initial": 4,
+        "lsb": 0,
+        "msb": 3,
+        "name": "Delta from Overvoltage Protection to the Overvoltage-Release Threshold",
+        "step": 10.0,
+        "unit": "",
+        "value": 4
+      },
+      "description": "Sets the permanent overvoltage protection threshold, the charge-detection threshold, the overvoltage-protection threshold, and the overvoltage-protection-release threshold. dOVP and dOVPR are relative to the Charge Voltage that is set in the nJEITAV register and have a 10mV resolution.",
+      "initial": 46932,
+      "name": "nOVPrtTh",
+      "size": 1,
+      "value": 46932
+    },
+    "nPReserved0": {
+      "UV_ChargeBlockThr": {
+        "description": "Enable this function to block charging if any of the cell voltages fall below this threshold. The UV_ChargeBlockThr can be set from 1.25V to 2.75V in steps of 0.25V. Set 000b to disable. UV_ChargeBlockThr Value(V) = 1V + (UV_ChargeBlockThr x .25V)",
+        "initial": 0,
+        "lsb": 10,
+        "msb": 12,
+        "name": "UnderVoltage Charge Block threshold (DevName 420Ah or newer)",
+        "value": 0
+      },
+      "addr": 448,
+      "initial": 0,
+      "name": "nPReserved0",
+      "size": 1,
+      "value": 0,
+      "x_mask": 58367
+    },
+    "nPackCfg": {
+      "AOCfg": {
+        "description": "Always-on Regulator Configuration.",
+        "initial": 0,
+        "lsb": 14,
+        "msb": 15,
+        "name": "AOCfg",
+        "value": 0
+      },
+      "CPCfg": {
+        "description": "Set according to the desired gate drive. Note that there is a trade-off in quiescent vs. gate-drive. Set CPCfg = {00b,01b,10b} for {6V, 8V, 10V} settings.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 9,
+        "name": "Charge Pump Voltage Configuration (DevName 420Ah or newer)",
+        "value": 0,
+        "values": {
+          "CPCfg_0": {
+            "description": "6V",
+            "value": 0
+          },
+          "CPCfg_1": {
+            "description": "8V",
+            "value": 1
+          },
+          "CPCfg_2": {
+            "description": "10V",
+            "value": 2
+          }
+        }
+      },
+      "NCELLS": {
+        "description": "his field configures the IC for the number of cells in series in the cell pack. Set NCELLS = cellcount-2.",
+        "initial": 0,
+        "lsb": 2,
+        "msb": 4,
+        "name": "Number of Cells",
+        "value": 0
+      },
+      "NThrms": {
+        "description": "Number of Thermistor Channels",
+        "initial": 0,
+        "lsb": 2,
+        "msb": 4,
+        "name": "NThrms",
+        "value": 0,
+        "values": {
+          "NThrms_0": {
+            "description": "only die temp",
+            "value": 0
+          },
+          "NThrms_1": {
+            "description": "die temp and TH1 thermistor channel enabled",
+            "value": 1
+          },
+          "NThrms_2": {
+            "description": "die temp and TH1 and TH2 thermistor channels enabled",
+            "value": 2
+          },
+          "NThrms_3": {
+            "description": "die temp and TH1, TH2, and TH3 thermistor channels enabled",
+            "value": 3
+          },
+          "NThrms_4": {
+            "description": "die temp and TH1, TH2, TH3 and TH4 thermistor channels enabled",
+            "value": 4
+          }
+        }
+      },
+      "THType": {
+        "description": "If using 10kΩ NTC thermistor, set THType = 0. If using 100kΩ NTC thermistor, set THType = 1.",
+        "initial": 0,
+        "name": "Thermistor Type",
+        "position": 11,
+        "value": 0
+      },
+      "addr": 437,
+      "description": "The nPackCfg register configures the number of cells and thermistors (and thermistor type) in the battery pack. It also configures the charge pump and backup regulator voltage levels. nPackCfg configuration must match the pack hardware for the proper operation of the IC.",
+      "initial": 0,
+      "name": "nPackCfg",
+      "size": 1,
+      "value": 0,
+      "values": {
+        "nPackCfg_0": {
+          "description": "AOLDO is disabled.",
+          "value": 0
+        },
+        "nPackCfg_1": {
+          "description": "AOLDO is enabled. Output is 3.4V.",
+          "value": 1
+        },
+        "nPackCfg_2": {
+          "description": "AOLDO is enabled. Output is 1.8V.",
+          "value": 2
+        },
+        "nPackCfg_3": {
+          "description": "AOLDO is enabled. Output is 3.4V.",
+          "value": 3
+        }
+      },
+      "zeros_mask": 5344
+    },
+    "nPackResistance": {
+      "addr": 453,
+      "initial": 0,
+      "name": "nPackResistance",
+      "size": 1,
+      "value": 0
+    },
+    "nProtCfg": {
+      "BlockDisCEn": {
+        "description": "If the block discharge at cold is enabled, the protector also disallows discharging when the temperature is below the TooCold Threshold (nTPrtTh1) (DevName 420Ah only).",
+        "initial": 0,
+        "name": "Block Discharge at TooCold Enable",
+        "position": 1,
+        "value": 0
+      },
+      "ChgWDTEn": {
+        "description": "If the charger watchdog feature is enabled, the protector disallows charging unless communication has not been detected for more than the Charger WatchDog delay that is configured innDelayCfg.ChgWdg.",
+        "initial": 0,
+        "name": "Charger WatchDog Enable",
+        "position": 15,
+        "value": 0
+      },
+      "CmOvrdEn": {
+        "description": "This bit when set to 1, allows the ChgOff and DisOff bits in CommStat to be set by I2C/1Wire communication to turn off the protection FETs.",
+        "initial": 0,
+        "name": "Comm Override Enable",
+        "position": 10,
+        "value": 0
+      },
+      "DeepShpEn": {
+        "description": "Set DeepShpEn = 1 to associate shutdown actions (I2C shutdown command or communication removal) with 2.2μA shutdown. All registers power down in this mode. Set DeepShpEn = 0 to continue full calculations but with protector disabled (CHGEn = 0, DISEn = 0, pump off), operating at 6μA consumption.",
+        "initial": 0,
+        "name": "Deepship Enable",
+        "position": 5,
+        "value": 0
+      },
+      "FetPFEn": {
+        "description": "Set to 1 to enable Charge FET and Discharge FET open or short failure detection, which registers a permanent failure and permanently turn the FETs off and drive the PFAIL pin high. PFEn must also be set for the FET PermFail Enable to operate.",
+        "initial": 0,
+        "name": "FET PermFail Enable",
+        "position": 2,
+        "value": 0
+      },
+      "OvrdEn": {
+        "description": "Set OvrdEn = 1 to enable the Alert pin to be an input to turn disable the protection FETs.",
+        "initial": 0,
+        "name": "Override Enable",
+        "position": 4,
+        "value": 0
+      },
+      "PFEn": {
+        "description": "Set PFEn = 1 to enable the detection of a Permanent Failure to permanently turn the FETs off. All types of permanent failures operate only if PFEn = 1 and are all disabled if PFEn = 0. PFEn must be enabled for the PFAIL pin to be operational. See the Permanent Fail section for more details.",
+        "initial": 0,
+        "name": "PermFail Enable",
+        "position": 6,
+        "value": 0
+      },
+      "PreqEn": {
+        "description": "Set PreqEn = 1 to enable the Pre-Qual enable functionality.",
+        "initial": 1,
+        "name": "PreQual Enable",
+        "position": 8,
+        "value": 1
+      },
+      "SCTest": {
+        "description": "Set SCTest = 01b to source 30μA from BATT to PCKP for testing the presence/removal of any overload/shortcircuit at PCKP. SCTest is only used during special circumstances when DIS = off. Particularly if an overdischarge current fault has been tripped. The IC sets SCTest to push 30μA into PCKP. If PCKP rises above the 1.5V SCDet threshold, then the overload is considered \"removed\" and safe to reconnect the DIS FET. Because of this, the PCKP resistor must be 10kΩ or less for proper short-circuit removal detection. Set SCTest = 00b to disable.",
+        "initial": 1,
+        "lsb": 11,
+        "msb": 12,
+        "name": "SCTest",
+        "value": 1
+      },
+      "UVRdyn": {
+        "description": "In the undervoltage-protected state (but higher than undervoltage shutdown), this bit chooses whether or not the CHG FET remains enabled. Configure UVRdy = 0 to keep the CHG FET and corresponding pumps powered during undervoltage protection. In this state, the pack is quickly responsive to charger connection, but the quiescent consumption remains 38μA. Configure UVRdy = 1 to disable the CHG FET and corresponding charge pumps during undervoltage protection. In this state, the consumption drops to 16μA, but there may be hibernate latency between when the charger is applied and the battery begins charging.",
+        "initial": 0,
+        "name": "Undervoltage-Ready",
+        "position": 3,
+        "value": 0
+      },
+      "addr": 471,
+      "description": "The Protection Configuration register contains enable bits for various protection functions.",
+      "initial": 2304,
+      "name": "nProtCfg",
+      "size": 1,
+      "value": 2304,
+      "zeros_mask": 25088
+    },
+    "nProtCfg2": {
+      "CEEn": {
+        "description": "Set to 1 to enable self-discharge detection.",
+        "initial": 1,
+        "name": "Coulombic-efficiency (CE) method enable",
+        "position": 13,
+        "value": 1
+      },
+      "CheckSum": {
+        "description": "CheckSum is the checksum value of the protection registers for validating NVM at startup when nNVCfg1.enProtChksm = 1.",
+        "initial": 101,
+        "lsb": 0,
+        "msb": 7,
+        "name": " Protector NVM CheckSum.",
+        "value": 101
+      },
+      "LeakCurrTh": {
+        "description": "An unsigned 4-bit threshold for leakage current alert and fault generation. The LSB resolution is either 0.625mA or 1.25mA based on the LeakCurrCfg setting as shown in Table 42. When alerts and faults are both enabled, the fault threshold is either 5mA, 10mA or 20mA above the alert threshold as shown in the Description column of Table 42.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 11,
+        "name": "Leakage Current Threshold",
+        "value": 0
+      },
+      "addr": 479,
+      "description": "See Battery Internal Self-Discharge Detection Registers",
+      "initial": 41061,
+      "name": "nProtCfg2",
+      "ones_mask": 32768,
+      "size": 1,
+      "value": 41061,
+      "zeros_mask": 20480
+    },
+    "nProtMiscTh": {
+      "CurrDet": {
+        "description": "CurrDet is configurable from 25μV/RSENSE to 400μV/RSENSE in 25μV/RSENSE steps (equivalent to 5mA to 80mA in 5mA steps with a 5mΩ sense resistor). It is a threshold to detect discharging and charging events. If current > CurrDet then charging; if current < -CurrDet then discharging. CurrDet Threshold = (CurrDet + 1) x 5mA (i.e., 0 = 5mA for 5mΩ RSENSE)",
+        "initial": 2,
+        "lsb": 4,
+        "msb": 7,
+        "name": "CurrDet",
+        "value": 2
+      },
+      "DieTempTh": {
+        "description": "Sets the Dietemp Overtemperature-Protection Threshold. DieTempTh is used as a proxy for FET temperature and controls the FET overtemperature fault. The range is 50°C and 125°C with a 5°C LSB.",
+        "initial": 8,
+        "lsb": 0,
+        "msb": 3,
+        "name": "DieTempTh",
+        "step": 5.0,
+        "unit": "",
+        "value": 8,
+        "zero_code_value": 50.0
+      },
+      "QovflwTh": {
+        "description": "QovflwTh sets the coefficient for the capacity overflow-protection threshold. Capacity overflow protection threshold = designCap x coefficient. The IC monitors the delta coulomb count (deltaQ) between the coulomb count at the start-of-charge and the present coulomb count. If the delta Q exceeds the capacity overflow-protection threshold, indicating that the charger has charged more than the expected capacity of the battery, then a ProtStatus.Qovrflw fault is generated. The coefficient is calculated as: coefficient = 1.0625 + (QovflwTh x 0.0625).",
+        "initial": 7,
+        "lsb": 12,
+        "msb": 15,
+        "name": "Capacity Overflow Threshold",
+        "value": 7
+      },
+      "TooHotDischarge": {
+        "description": "Sets the Overtemperature-Protection Threshold Associated with Discharge. TooHotDischarge has 2°C LSB's and defines the delta between Over-Temp-Charge (nTPrtTh1.T4) and Over-Temp-Discharge. The range is nTPrtTh1.T4(TooHot) to nTPrtTh1.T4(TooHot) + 30°C.",
+        "initial": 10,
+        "lsb": 8,
+        "msb": 11,
+        "name": "Capacity Overflow Threshold",
+        "value": 10
+      },
+      "addr": 470,
+      "description": "Sets a few miscellaneous protection thresholds. ",
+      "initial": 31272,
+      "name": "nProtMiscTh",
+      "size": 1,
+      "value": 31272
+    },
+    "nQRTable00": {
+      "addr": 416,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 0,
+      "name": "nQRTable00",
+      "size": 1,
+      "value": 0
+    },
+    "nQRTable10": {
+      "addr": 417,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 0,
+      "name": "nQRTable10",
+      "size": 1,
+      "value": 0
+    },
+    "nQRTable20": {
+      "addr": 418,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 0,
+      "name": "nQRTable20",
+      "size": 1,
+      "value": 0
+    },
+    "nQRTable30": {
+      "addr": 419,
+      "description": "The nQRTable00 to nQRTable30 register locations contain characterization information regarding cell capacity that is not available under certain application conditions.",
+      "initial": 0,
+      "name": "nQRTable30",
+      "size": 1,
+      "value": 0
+    },
+    "nRComp0": {
+      "addr": 422,
+      "description": "The nRComp0 register holds characterization information critical to computing the open circuit voltage of a cell under loaded conditions.",
+      "initial": 0,
+      "name": "nRComp0",
+      "size": 1,
+      "value": 0
+    },
+    "nRGain": {
+      "addr": 452,
+      "initial": 0,
+      "name": "nRGain",
+      "size": 1,
+      "value": 0
+    },
+    "nROMID0": {
+      "addr": 444,
+      "description": "Each IC contains a unique 64-bit identification value that is contained in the nROMID registers. Note this is the same ID that can be read using the 1-Wire ROM ID commands. nROMID3 is the most significant byte, nROMID0 is the least significant byte.",
+      "initial": 0,
+      "name": "nROMID0",
+      "size": 1,
+      "value": 0
+    },
+    "nROMID1": {
+      "addr": 445,
+      "description": "Each IC contains a unique 64-bit identification value that is contained in the nROMID registers. Note this is the same ID that can be read using the 1-Wire ROM ID commands. nROMID3 is the most significant byte, nROMID0 is the least significant byte.",
+      "initial": 0,
+      "name": "nROMID1",
+      "size": 1,
+      "value": 0
+    },
+    "nROMID2": {
+      "addr": 446,
+      "description": "Each IC contains a unique 64-bit identification value that is contained in the nROMID registers. Note this is the same ID that can be read using the 1-Wire ROM ID commands. nROMID3 is the most significant byte, nROMID0 is the least significant byte.",
+      "initial": 0,
+      "name": "nROMID2",
+      "size": 1,
+      "value": 0
+    },
+    "nROMID3": {
+      "addr": 447,
+      "description": "Each IC contains a unique 64-bit identification value that is contained in the nROMID registers. Note this is the same ID that can be read using the 1-Wire ROM ID commands. nROMID3 is the most significant byte, nROMID0 is the least significant byte.",
+      "initial": 0,
+      "name": "nROMID3",
+      "size": 1,
+      "value": 0
+    },
+    "nRSense": {
+      "addr": 463,
+      "description": "The nRSense register is the designated location to store the nominal sense resistor value used by the application. This value is not used by the IC as all current and capacity information is reported in terms of μV and μVH. Host software can use the nRSense register value to convert current and capacity information into mA and mAH.  It is recommended that the sense resistor value be stored with an LSb weight of 10μΩ giving a range of 10μΩ to 655.35mΩ",
+      "initial": 500,
+      "name": "nRSense",
+      "size": 1,
+      "value": 0
+    },
+    "nRelaxCfg": {
+      "LOAD": {
+        "description": "Sets the threshold, which the AvgCurrent register is compared against. The AvgCurrent register must remain below this threshold value for the cell to be considered unloaded. Load is an unsigned 7-bit value where 1 LSb = 50μV. The default value is 800μV.",
+        "initial": 16,
+        "lsb": 9,
+        "msb": 15,
+        "name": "LOAD",
+        "step": 50.0,
+        "unit": "",
+        "value": 16
+      },
+      "addr": 438,
+      "dV": {
+        "description": "Sets the threshold, which VCell is compared against. If the cell’s voltage changes by less than dV over two consecutive periods set by dt, the cell is considered relaxed; dV has a range of 0 to 40mV where 1 LSb = 1.25mV. The default value is 3.75mV.",
+        "initial": 3,
+        "lsb": 4,
+        "msb": 8,
+        "name": "dV",
+        "step": 1.25,
+        "unit": "",
+        "value": 3
+      },
+      "description": "The nRelaxCfg register defines how the IC detects if the cell is in a relaxed state. See Figure 28. For a cell to be considered relaxed, current flow through the cell must be kept at a minimum while the change in the cell’s voltage over time, dV/dt, shows little or no change. If AvgCurrent remains below the LOAD threshold while VCell changes less than the dV threshold over two consecutive periods of dt, the cell is considered relaxed.",
+      "dt": {
+        "description": "Sets the time period over which change in VCell is compared against dV. If the cell’s voltage changes by less than dV over two consecutive periods set by dt, the cell is considered relaxed. The default value is 1.5 minutes. The comparison period is calculated as: Relaxation period = 2(dt-8) x 45s",
+        "initial": 9,
+        "lsb": 0,
+        "msb": 3,
+        "name": "dt",
+        "value": 9
+      },
+      "initial": 8249,
+      "name": "nRelaxCfg",
+      "size": 1,
+      "value": 8249
+    },
+    "nRippleCfg": {
+      "NR": {
+        "description": "Sets the filter magnitude for ripple observation as defined by the following equation giving a range of 1.4 seconds to 180 seconds. Ripple Time Range = 1.4 seconds x 2NR",
+        "initial": 4,
+        "lsb": 0,
+        "msb": 2,
+        "name": "NR",
+        "value": 4
+      },
+      "addr": 433,
+      "description": "The nRippleCfg register configures ripple measurement and ripple compensation. The recommended value for this register is 0x0204.",
+      "initial": 516,
+      "kDV": {
+        "description": "Sets the corresponding amount of capacity to compensate proportional to the ripple.",
+        "initial": 64,
+        "lsb": 3,
+        "msb": 15,
+        "name": "kDV",
+        "value": 64
+      },
+      "name": "nRippleCfg",
+      "size": 1,
+      "value": 516
+    },
+    "nSAlrtTh": {
+      "SMAX": {
+        "description": "An alert is generated if the selected SOC register reading exceeds this value. This field has 1% LSb resolution.",
+        "initial": 255,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum state-of-charge reading",
+        "unit": "",
+        "value": 255
+      },
+      "SMIN": {
+        "description": "An alert is generated if the selected SOC register reading falls below this value. This field has 1% LSb resolution.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum state-of-charge reading",
+        "unit": "",
+        "value": 0
+      },
+      "addr": 399,
+      "description": "The nSAlrtTh register shown in Table 88 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by the selected RepSOC, AvSOC, MixSOC, or VFSOC register values. See the MiscCFG.SACFG setting for details. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 1% resolution over the full operating range of the selected SOC register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 65280,
+      "name": "nSAlrtTh",
+      "size": 1,
+      "value": 65280
+    },
+    "nSBSCfg": {
+      "CapMD": {
+        "description": "Selects the sBatteryMode.CapMd bit default setting when operating in SBS mode. CapMd resets to 0 every time a pack removal occurs as detected by floating communication lines.",
+        "initial": 1,
+        "name": "CapMD",
+        "position": 15,
+        "value": 1
+      },
+      "MECfg": {
+        "description": "Configures sMaxError register output when operating in SBS mode.",
+        "initial": 0,
+        "lsb": 1,
+        "msb": 2,
+        "name": "MECfg",
+        "value": 0,
+        "values": {
+          "MECfg_0": {
+            "description": "Always report 0% error",
+            "value": 0
+          },
+          "MECfg_1": {
+            "description": "Always report 1% error",
+            "value": 1
+          },
+          "MECfg_2": {
+            "description": "Report actual experienced error",
+            "value": 2
+          },
+          "MECfg_3": {
+            "description": "Always report 3% error",
+            "value": 3
+          }
+        }
+      },
+      "SBS_FullReleaseThr": {
+        "description": "SBS Full Release Threshold. (DevName 420Ah or newer) sBatteryStatus.Full bit is cleared when SOC<SBS_FullReleaseThr. Configurable between 85% and 99% with a 1% LSB.",
+        "initial": 9,
+        "lsb": 10,
+        "msb": 13,
+        "name": "SBS_FullReleaseThr",
+        "unit": "",
+        "value": 9,
+        "zero_code_value": 85.0
+      },
+      "SBS_RSenseSel": {
+        "description": " (DevName 420Ah or newer) SBS module can support 1.25mOhm, 2.5mOhm, 5mOhm and 10mOhm (Previously only 2.5mOhm sense resistor was supported with DevName 4209h). All the SBS registers for capacity and current are scaled based on RSenseSel.",
+        "initial": 3,
+        "lsb": 4,
+        "msb": 5,
+        "name": "RSense Selection",
+        "unit": "",
+        "value": 3,
+        "values": {
+          "1.250000": {
+            "value": 0
+          },
+          "10": {
+            "value": 3
+          },
+          "2.500000": {
+            "value": 1
+          },
+          "5": {
+            "value": 2
+          }
+        }
+      },
+      "WPen": {
+        "description": "Set WPen to 0 for SBS mode.",
+        "initial": 1,
+        "name": "Write Protection Enable",
+        "position": 3,
+        "value": 1
+      },
+      "addr": 436,
+      "description": "The nSBSCfg register manages settings for SBS mode operation of the IC.",
+      "initial": 42425,
+      "name": "nSBSCfg",
+      "size": 1,
+      "value": 42425,
+      "x_mask": 17345
+    },
+    "nScOcvLim": {
+      "addr": 481,
+      "initial": 0,
+      "name": "nScOcvLim",
+      "size": 1,
+      "value": 0
+    },
+    "nSerialNumber0": {
+      "addr": 488,
+      "description": "SerialNumber indicates the 16-bit serial number as stored in nSerialNumber MTP. SerialNumber2 and SerialNumber3 provide extended data for the serial number as stored in nSerialNumber2 and nSerialNumber3. By using 6 bytes total, a serial number can provide a very unique ID for 281 trillion devices. A 4-byte serial number can support 4.3 billion devices. Some of the bits can be fixed to indicate platform or other information.",
+      "initial": 0,
+      "name": "nSerialNumber0",
+      "size": 1,
+      "value": 0
+    },
+    "nSerialNumber1": {
+      "addr": 489,
+      "description": "SerialNumber indicates the 16-bit serial number as stored in nSerialNumber MTP. SerialNumber2 and SerialNumber3 provide extended data for the serial number as stored in nSerialNumber2 and nSerialNumber3. By using 6 bytes total, a serial number can provide a very unique ID for 281 trillion devices. A 4-byte serial number can support 4.3 billion devices. Some of the bits can be fixed to indicate platform or other information.",
+      "initial": 0,
+      "name": "nSerialNumber1",
+      "size": 1,
+      "value": 0
+    },
+    "nSerialNumber2": {
+      "addr": 490,
+      "description": "SerialNumber indicates the 16-bit serial number as stored in nSerialNumber MTP. SerialNumber2 and SerialNumber3 provide extended data for the serial number as stored in nSerialNumber2 and nSerialNumber3. By using 6 bytes total, a serial number can provide a very unique ID for 281 trillion devices. A 4-byte serial number can support 4.3 billion devices. Some of the bits can be fixed to indicate platform or other information.",
+      "initial": 0,
+      "name": "nSerialNumber2",
+      "size": 1,
+      "value": 0
+    },
+    "nStepChg": {
+      "StepCurr1": {
+        "description": "Scales the JEITA zone charge current down by a 4-bit ratio from 1/16 to 16/16. StepCurrent1 = ChargingCurrent_JEITAZONE x StepCurr1/16.",
+        "initial": 12,
+        "lsb": 12,
+        "msb": 15,
+        "name": "StepCurr1",
+        "step": 6.25,
+        "unit": "",
+        "value": 12,
+        "zero_code_value": 6.25
+      },
+      "StepCurr2": {
+        "description": "Scales the JEITA zone charge current down by a 4-bit ratio from 1/16 to 16/16. StepCurrent2 = ChargingCurrent_JEITAZONE x StepCurr2/16.",
+        "initial": 8,
+        "lsb": 8,
+        "msb": 11,
+        "name": "StepCurr2",
+        "step": 6.25,
+        "unit": "",
+        "value": 8,
+        "zero_code_value": 6.25
+      },
+      "StepdV0": {
+        "description": "These register bit-fields configure StepVolt0 and StepVolt1 relative to the JEITA zone charge voltage. Both registers are negative offsets relative to JEITA ChargeVoltage, and both registers support 10mV LSB. StepV0 = ChargingVoltageJEITAZONE - (StepdV0 x 10mV).",
+        "initial": 8,
+        "lsb": 4,
+        "msb": 7,
+        "name": "StepdV0",
+        "step": -10.0,
+        "unit": "",
+        "value": 8
+      },
+      "StepdV1": {
+        "description": "These register bit-fields configure StepVolt0 and StepVolt1 relative to the JEITA zone charge voltage. Both registers are negative offsets relative to JEITA ChargeVoltage, and both registers support 10mV LSB. StepV1 = ChargingVoltageJEITAZONE - (StepdV1 x 10mV).",
+        "initial": 4,
+        "lsb": 0,
+        "msb": 3,
+        "name": "StepdV1",
+        "step": -10.0,
+        "unit": "",
+        "value": 4
+      },
+      "addr": 475,
+      "description": "The nStepChg register defines the step-charging prescription as shown in Figure 10.\nNote: This only effects the ChargingCurrent output register which prescribes a charge current controlled by the external charger. To disable step-charging prescription, set nStepChg = FF00h.",
+      "initial": 51332,
+      "name": "nStepChg",
+      "size": 1,
+      "value": 51332
+    },
+    "nTAlrtTH": {
+      "TMAX": {
+        "description": "An alert is generated if any temperature channel reading exceeds this value. This field is signed 2's complement format with 1ºC LSb resolution.",
+        "initial": 127,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum temperature reading",
+        "signed": true,
+        "unit": "",
+        "value": 127
+      },
+      "TMIN": {
+        "description": "An alert is generated if the Temp register reading falls below this value. This field is signed 2's complement format with 1ºC LSb resolution.",
+        "initial": 128,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum temperature reading",
+        "signed": true,
+        "unit": "",
+        "value": 128
+      },
+      "addr": 397,
+      "description": "The nTAlrtTh register sets upper and lower limits that generate an ALRT pin interrupt if exceeded by any thermistor reading. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are stored in 2’s-complement format with 1ºC resolution over the full operating range of the Temp register. At power-up, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 32640,
+      "name": "nTAlrtTH",
+      "size": 1,
+      "value": 32640
+    },
+    "nTPrtTh1": {
+      "T1": {
+        "description": "JEITA \"Too-Cold\" temperature threshold. When Temp < T1, charging is considered unsafe and unhealthy, and the IC blocks charging.",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 7,
+        "name": "T1",
+        "value": 0
+      },
+      "T4": {
+        "description": "JEITA \"Too-Hot\" temperature threshold. When Temp > T4, charging is blocked by the IC.",
+        "initial": 55,
+        "lsb": 8,
+        "msb": 15,
+        "name": "T4",
+        "value": 55
+      },
+      "addr": 465,
+      "description": "Sets T1 \"Too-Cold\" and T4 \"Too-Hot\" thresholds which control JEITA and provide charging (Too-Hot or Too-Cold) protection. nProtMiscTh.TooHotDischarge provides discharging (Too-Hot only) protection.",
+      "initial": 14080,
+      "name": "nTPrtTh1",
+      "size": 1,
+      "value": 14080
+    },
+    "nTPrtTh2": {
+      "T2": {
+        "description": "JEITA \"Cold\" temperature threshold. When Temp < T2, charging current/voltage should be reduced, and the chargeprotection thresholds are adjusted accordingly.",
+        "initial": 10,
+        "lsb": 0,
+        "msb": 7,
+        "name": "T2",
+        "value": 10
+      },
+      "T3": {
+        "description": "JEITA \"JEITA \"Hot\" temperature threshold. When Temp > T3, charging current/voltage should be reduced and the chargeprotection thresholds are adjusted accordingly.",
+        "initial": 45,
+        "lsb": 8,
+        "msb": 15,
+        "name": "T3",
+        "value": 45
+      },
+      "addr": 469,
+      "description": "Sets T2 \"Cold\" and T3 \"Hot\" thresholds which control JEITA and modulate charging (Hot or Cold) guidance and protection.",
+      "initial": 11530,
+      "name": "nTPrtTh2",
+      "size": 1,
+      "value": 11530
+    },
+    "nTPrtTh3": {
+      "TpermFailHot": {
+        "description": "If enabled, the IC goes into permanent failure mode, and permanently disables the charge FET as well as trips the secondary protector (if installed) or blows the fuse (if installed).",
+        "initial": 85,
+        "lsb": 8,
+        "msb": 15,
+        "name": "TpermFailHot",
+        "value": 85
+      },
+      "Twarm": {
+        "description": "Warm temperature threshold (between 'normal' and THot), giving an extra temperature region for changing charging current and charging voltage control.",
+        "initial": 40,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Twarm",
+        "value": 40
+      },
+      "addr": 466,
+      "description": "Sets Twarm and TpermFailHot thresholds which control JEITA and modulate charging (Warm) guidance and protection. nTPrtTh3 defines protection thresholds beyond standard JEITA definition.",
+      "initial": 21800,
+      "name": "nTPrtTh3",
+      "size": 1,
+      "value": 21800
+    },
+    "nTTFCfg": {
+      "addr": 455,
+      "description": "The nTTFCfg register configures parameters related to the time-to-full (TTF) calculation. If nNVCfg1.enTTF is set, CVHalfTime (0B7h) and CVMixCapRatio (0B6h) are refreshed from the nTTFCfg Register. CVHalfTime (0B7h) is defined as the amount of time in the constant voltage portion of the charge cycle for the current to taper to half of the charging current in the constant current portion of the charge cycle. CVHalfTime has an LSB of 0.0001953125 hours.\nCVMixCapRatio (0B6h) is defined as the approximate state of charge where the charge transitions from the constant current portion of the charge cycle to the constant voltage portion of the charge current. CVMixCapRatio has an LSB of 0.5mAh.\nThe Alternate Initial Value indicates that the charge cycle transitions from constant current to constant voltage when the SOC is 75% and that it then takes 30 minutes for the current to taper half of the charging current. \nFor example, for a nCVHalftime of 37.5 minutes (2250 seconds) and a nCVMixRatio of 59%, the value for nTTFCfg = 3297h. These values are calculated as follows:\nnCVHalfTime = 2250s/45 = 50dec = 32h\nnCVMixCapRatio = 59% x 256 = 151dec = 97h \n",
+      "initial": 0,
+      "nCVHalfTime": {
+        "description": "nCVMixCapRatio has an LSB of 1/256 giving a full scale range of 0 to 0.9961. nCVMixCapRatio = CVMixCapRatio(%) × 256 ",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 7,
+        "name": "nCVHalfTime",
+        "step": 0.00390625,
+        "value": 0
+      },
+      "nCVMixCapRatio": {
+        "description": "nCVHalfTime has an LSB of 45 seconds giving a full scale range of 0 seconds to 192 minutes. nCVHalfTime = CVHalfTime(s)/45 seconds",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "nCVMixCapRatio",
+        "step": 45.0,
+        "unit": "",
+        "value": 0
+      },
+      "name": "nTTFCfg",
+      "size": 1,
+      "value": 0
+    },
+    "nTempCo": {
+      "addr": 423,
+      "description": "The nTempCo register holds temperature compensation information for the nRComp0 register value.",
+      "initial": 0,
+      "name": "nTempCo",
+      "size": 1,
+      "value": 0
+    },
+    "nThermCfg": {
+      "addr": 458,
+      "description": "External NTC thermistors generate a temperature related voltage measured at the TH(1-4) pins. Set nThermCfg register to compensate thermistor for accurate translation of temperature.\nFor 10k: nThermCfg = 7000h + (3245919/Beta - 512)\nFor 100k: nThermCfg = 3000h + (3245919/Beta - 512)\nUse Beta 25°C-85°C.\n",
+      "initial": 29118,
+      "name": "nThermCfg",
+      "size": 1,
+      "value": 0
+    },
+    "nTimerH": {
+      "addr": 431,
+      "backup": "nTimerH (1AFh) if nNVCfg2.enT is set",
+      "description": "This register allows the IC to track the age of the cell. An LSb of 3.2 hours gives a full-scale range for the register of up to 23.94 years. If enabled, this register is periodically backed up to nonvolatile memory as part of the learning function.",
+      "initial": 0,
+      "name": "nTimerH",
+      "size": 1,
+      "step": 3.2,
+      "unit": "nTimerH (1AFh) if nNVCfg2.enT is set",
+      "value": 0
+    },
+    "nUVPrtTh": {
+      "UOCVP": {
+        "description": "The IC opens the discharge FET when VFOCV < UOCVP. UOCVP is relative to UVP and can be configured from UVP to UVP + 1.28V in 40mV steps.",
+        "initial": 8,
+        "lsb": 4,
+        "msb": 8,
+        "name": "Under Open Circuit Voltage Protection Threshold (also refered to as SmartEmpty)",
+        "step": 40.0,
+        "unit": "",
+        "value": 8
+      },
+      "UVP": {
+        "description": "The IC opens the discharge FET when VCell < UVP. UVP can be configured from 2.2V to 3.46V in 20mV steps.",
+        "initial": 20,
+        "lsb": 10,
+        "msb": 15,
+        "name": "UnderVoltage Protection threshold",
+        "step": 0.02,
+        "unit": "",
+        "value": 20,
+        "zero_code_value": 2.2
+      },
+      "UVShdn": {
+        "description": "The IC shutdowns when VCell < UVShdn. UVShdn is relative to UVP and can be configured from UVP - 0.32V to UVP + 0.28V in 40mV steps.",
+        "initial": 12,
+        "lsb": 0,
+        "msb": 3,
+        "name": "UnderVoltage Shutdown Threshold",
+        "signed": true,
+        "step": 40.0,
+        "unit": "",
+        "value": 12
+      },
+      "addr": 464,
+      "description": "Sets undervoltage protection, deep-discharge-state protection, and undervoltage-shutdown thresholds.",
+      "initial": 20620,
+      "name": "nUVPrtTh",
+      "size": 1,
+      "value": 20620,
+      "zeros_mask": 512
+    },
+    "nVEmpty": {
+      "VE": {
+        "description": "Sets the voltage level for detecting empty. A 10mV resolution gives a 0 to 5.11V range. This value is written to 3.3V after reset if nonvolatile backup is disabled.",
+        "initial": 300,
+        "lsb": 7,
+        "msb": 15,
+        "name": "Empty Voltage",
+        "step": 0.01,
+        "unit": "",
+        "value": 300
+      },
+      "VR": {
+        "description": "Sets the voltage level for clearing empty detection. Once the cell voltage rises above this point, empty voltage detection is re-enabled. A 40mV resolution gives a 0 to 5.08V range. This value is written to 3.88V after reset if nonvolatile backup is disabled.",
+        "initial": 89,
+        "lsb": 0,
+        "msb": 6,
+        "name": "Recovery Voltage",
+        "step": 0.04,
+        "unit": "",
+        "value": 89
+      },
+      "addr": 414,
+      "description": "The nVempty register sets thresholds related to empty detection during operation.",
+      "initial": 38489,
+      "name": "nVEmpty",
+      "size": 1,
+      "value": 38489
+    },
+    "nValrtTh": {
+      "VMAX": {
+        "description": "An alert is generated if the maximum cell voltage reading exceeds this value. This field has 20mV LSb resolution.",
+        "initial": 0,
+        "lsb": 8,
+        "msb": 15,
+        "name": "Maximum voltage reading",
+        "step": 0.02,
+        "unit": "",
+        "value": 0
+      },
+      "VMIN": {
+        "description": "An alert is generated if the VCell register reading falls below this value. This field has 20mV LSb resolution.",
+        "initial": 255,
+        "lsb": 0,
+        "msb": 7,
+        "name": "Minimum voltage reading",
+        "step": 0.02,
+        "unit": "",
+        "value": 255
+      },
+      "addr": 396,
+      "description": "The nVAlrtTh register shown in Table 86 sets upper and lower limits that generate an ALRT pin interrupt if exceeded by any of the cell voltage readings. The upper 8 bits set the maximum value and the lower 8 bits set the minimum value. Interrupt threshold limits are selectable with 20mV resolution over the full operating range of the VCell register. At powerup, the thresholds default to their maximum settings unless they are configured to be restored from nonvolatile memory instead by setting the nNVCfg1.enAT bit.",
+      "initial": 255,
+      "name": "nValrtTh",
+      "size": 1,
+      "value": 255
+    },
+    "nVoltTemp": {
+      "AvgCell": {
+        "description": "AvgVCell Upper 9 bits",
+        "initial": 0,
+        "lsb": 7,
+        "msb": 15,
+        "name": "AvgCell",
+        "step": 0.078125,
+        "unit": "",
+        "value": 0
+      },
+      "AvgTA": {
+        "description": "AvgTA Upper 7 bits",
+        "initial": 0,
+        "lsb": 0,
+        "msb": 6,
+        "name": "AvgTA",
+        "signed": true,
+        "step": 0.00390625,
+        "unit": "",
+        "value": 0
+      },
+      "addr": 426,
+      "backup": "AvgVCell and AvgTA registers if nNVCfg2.enVT = 1",
+      "description": "This register has dual functionality depending on configuration settings. If nNVCfg2.enVT = 1, this register provides nonvolatile back up of the AvgVCell and AvgTA registers. Alternatively, if nNVCfg0.enAF = 1, this register stores an accumulated age slope value to be used with the Age Forecasting algorithm. Regardless of which option is enabled, this register is periodically saved to nonvolatile memory as part of the learning function. If neither option is enabled, this register can be used as general-purpose user memory.",
+      "initial": 0,
+      "name": "nVoltTemp",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable0": {
+      "addr": 384,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable0",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable1": {
+      "addr": 385,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable1",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable10": {
+      "addr": 394,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable10",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable11": {
+      "addr": 395,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable11",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable2": {
+      "addr": 386,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable2",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable3": {
+      "addr": 387,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable3",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable4": {
+      "addr": 388,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable4",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable5": {
+      "addr": 389,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable5",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable6": {
+      "addr": 390,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable6",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable7": {
+      "addr": 391,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable7",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable8": {
+      "addr": 392,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable8",
+      "size": 1,
+      "value": 0
+    },
+    "nXTable9": {
+      "addr": 393,
+      "description": "Cell characterization information used by the ModelGauge algorithm to determine capacity versus operating conditions. This table comes from battery characterization data. These are nonvolatile memory locations.",
+      "initial": 0,
+      "name": "nXTable9",
+      "size": 1,
+      "value": 0
+    },
+    "size": 8192
+  },
+  "endian": "little",
+  "name": "MAX17320",
+  "num_pages": 32,
+  "register_width": 16,
+  "registers_per_page": 16,
+  "version": 1
+}
